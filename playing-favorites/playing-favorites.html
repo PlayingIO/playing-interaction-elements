@@ -94,10 +94,12 @@
             path="favorites" op="removeFromFavorites"></mostly-operation>
 
     <mostly-operation id="fetchFavOp"
-            path="favorites" op="Favorite.Fetch" response="favorite"></mostly-operation>
+            path="favorites" op="fetchFavorites"
+            method="get" input="0"
+            response="favorite"></mostly-operation>
 
     <mostly-page-provider id="favoritesProvider"
-            provider="default_content_collection"
+            provider="collections"
             page-size="50"
             schemas="dublincore,common"
             enrichers="thumbnail">
@@ -106,10 +108,10 @@
     <div class="header">[[i18n('app.favorites')]]</div>
     <div class="content">
       <mostly-data-list nx-provider="favoritesProvider" id="favoritesList"
-                selected-item="{{selectedFavorite}}" items="{{favorites}}"
-                selection-enabled as="favorite"
-                empty-label="[[i18n('favorites.empty')]]"
-                empty-label-when-filtered="[[i18n('favorites.empty')]]">
+              selected-item="{{selectedFavorite}}" items="{{favorites}}"
+              selection-enabled as="favorite"
+              empty-label="[[i18n('favorites.empty')]]"
+              empty-label-when-filtered="[[i18n('favorites.empty')]]">
         <template>
           <div tabindex$="{{tabIndex}}" class$="[[_computedClass(selected)]]">
             <div class="list-item-box vertical layout">

@@ -162,85 +162,84 @@
     </div>
 
 
-      <neon-animated-pages class="content" id="queues" selected="[[_selectedPage]]" entry-animation="[[_entryAnimation]]" exit-animation="[[_exitAnimation]]">
-        <neon-animatable>
+    <neon-animated-pages class="content" id="queues" selected="[[_selectedPage]]" entry-animation="[[_entryAnimation]]" exit-animation="[[_exitAnimation]]">
+      <neon-animatable>
 
-          <div id="collections" class="collections" hidden$="{{_isDisplayMembers}}">
-            <mostly-page-provider id="collectionsProvider"
-               provider="user_collections"
-               page-size="40"
-               params='{"searchTerm":"%","user":"$currentUser"}'
-               sort='{"dc:modified":"desc"}'
-               schemas="dublincore,common"
-               enrichers="permissions"
-               headers='{"X-NXfetch.document": "properties"}'>
-            </mostly-page-provider>
+        <div id="collections" class="collections" hidden$="{{_isDisplayMembers}}">
+          <mostly-page-provider id="collectionsProvider"
+             provider="collections"
+             page-size="40"
+             params='{}'
+             sort='{"createdAt":"-1"}'
+             schemas="dublincore,common"
+             enrichers="permissions">
+          </mostly-page-provider>
 
-            <mostly-data-list nx-provider="collectionsProvider" id="collectionsList"
-              selected-item="{{selectedCollection}}"
-              selection-enabled as="collection"
-              empty-label="[[i18n('collections.empty')]]"
-              empty-label-when-filtered="[[i18n('collections.empty')]]">
-              <template>
-                <div tabindex$="{{tabIndex}}" class$="[[_computedClass(selected)]]">
-                  <div class="collection-box vertical layout">
-                    <div class="collection-info horizontal layout center">
-                      <div class="vertical layout center">
-                        <iron-icon class="collection-name-icon" icon="nuxeo:collections"></iron-icon>
-                      </div>
-                      <span class="collection-name title">[[collection.title]]</span>
+          <mostly-data-list nx-provider="collectionsProvider" id="collectionsList"
+            selected-item="{{selectedCollection}}"
+            selection-enabled as="collection"
+            empty-label="[[i18n('collections.empty')]]"
+            empty-label-when-filtered="[[i18n('collections.empty')]]">
+            <template>
+              <div tabindex$="{{tabIndex}}" class$="[[_computedClass(selected)]]">
+                <div class="collection-box vertical layout">
+                  <div class="collection-info horizontal layout center">
+                    <div class="vertical layout center">
+                      <iron-icon class="collection-name-icon" icon="nuxeo:collections"></iron-icon>
                     </div>
-                    <div class="collection-detail">
-                      <div class="date horizontal layout center">
-                        <span class="collection-property">[[i18n('collections.lastModified')]] </span>
-                        <nuxeo-date datetime="[[collection.properties.dc:modified]]"></nuxeo-date>
-                      </div>
-                      <div class="layout center">
-                        <span class="collection-property">[[i18n('collections.ownedBy')]]</span>
-                        <playing-user-tag user="[[collection.properties.dc:creator]]"></playing-user-tag>
-                      </div>
+                    <span class="collection-name title">[[collection.title]]</span>
+                  </div>
+                  <div class="collection-detail">
+                    <div class="date horizontal layout center">
+                      <span class="collection-property">[[i18n('collections.lastModified')]] </span>
+                      <nuxeo-date datetime="[[collection.properties.dc:modified]]"></nuxeo-date>
+                    </div>
+                    <div class="layout center">
+                      <span class="collection-property">[[i18n('collections.ownedBy')]]</span>
+                      <playing-user-tag user="[[collection.properties.dc:creator]]"></playing-user-tag>
                     </div>
                   </div>
                 </div>
-              </template>
-            </mostly-data-list>
-          </div>
+              </div>
+            </template>
+          </mostly-data-list>
+        </div>
 
-        </neon-animatable>
+      </neon-animatable>
 
-        <neon-animatable>
+      <neon-animatable>
 
-          <div id="queue" hidden$="{{!_isDisplayMembers}}">
-            <mostly-data-list id="membersList"
-              selected-item="{{selectedMember}}"
-              selection-enabled as="member"
-              empty-label="[[i18n('collections.members.empty')]]"
-              empty-label-when-filtered="[[i18n('collections.members.empty')]]">
-              <template>
-                <div tabindex$="{{tabIndex}}" class$="[[_computedClass(selected)]]">
+        <div id="queue" hidden$="{{!_isDisplayMembers}}">
+          <mostly-data-list id="membersList"
+            selected-item="{{selectedMember}}"
+            selection-enabled as="member"
+            empty-label="[[i18n('collections.members.empty')]]"
+            empty-label-when-filtered="[[i18n('collections.members.empty')]]">
+            <template>
+              <div tabindex$="{{tabIndex}}" class$="[[_computedClass(selected)]]">
 
-                  <div class="list-item-box vertical layout">
-                    <div class="list-item-info horizontal layout center" >
-                      <div class="vertical layout center">
-                        <mostly-thumbnail document="[[member]]"></mostly-thumbnail>
-                      </div>
-                      <div class="flex">
-                        <span class="list-item-title ellipsis">[[member.title]]</span>
-                        <span class="list-item-property ellipsis">[[member.type]]</span>
-                      </div>
-                      <iron-icon  id="removeFromCollection" class="remove" hidden$="[[!_canRemove(selectedCollection)]]"
-                        icon="nuxeo:remove" data-uid$="[[member.uid]]" on-tap="_removeFromCollection">
-                      </iron-icon>
+                <div class="list-item-box vertical layout">
+                  <div class="list-item-info horizontal layout center" >
+                    <div class="vertical layout center">
+                      <mostly-thumbnail document="[[member]]"></mostly-thumbnail>
                     </div>
+                    <div class="flex">
+                      <span class="list-item-title ellipsis">[[member.title]]</span>
+                      <span class="list-item-property ellipsis">[[member.type]]</span>
+                    </div>
+                    <iron-icon  id="removeFromCollection" class="remove" hidden$="[[!_canRemove(selectedCollection)]]"
+                      icon="nuxeo:remove" data-uid$="[[member.uid]]" on-tap="_removeFromCollection">
+                    </iron-icon>
                   </div>
-
                 </div>
-              </template>
-            </mostly-data-list>
-          </div>
 
-        </neon-animatable>
-      </neon-animated-pages>
+              </div>
+            </template>
+          </mostly-data-list>
+        </div>
+
+      </neon-animatable>
+    </neon-animated-pages>
 
     <mostly-keys keys="right l" on-pressed="_navigateOnRight"></mostly-keys>
     <mostly-keys keys="left h" on-pressed="_navigateOnLeft"></mostly-keys>
@@ -252,7 +251,7 @@
   <script>
     Polymer({
       is: 'playing-collections',
-      behaviors: [Nuxeo.RoutingBehavior, Nuxeo.I18nBehavior, Nuxeo.FiltersBehavior],
+      behaviors: [Mostly.RoutingBehavior, Mostly.I18nBehavior, Mostly.FiltersBehavior],
 
       properties: {
 
