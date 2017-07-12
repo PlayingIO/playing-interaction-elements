@@ -1,0 +1,78 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../nuxeo-ui-elements/nuxeo-icons.html">
+<link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
+<link rel="import" href="../../mostly-elements/widgets/mostly-tag.html">
+
+<!--
+`playing-document-collections`
+@group Playing UI
+@element playing-document-collections
+-->
+<dom-module id="playing-document-collections">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      iron-icon {
+        /* Similiar look and feel as select2 */
+        height: 13px;
+        width: 13px;
+        opacity: 0.6;
+      }
+
+      iron-icon:hover {
+        cursor: pointer;
+        opacity: 1;
+      }
+
+      .ellipsis {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: block;
+      }
+
+    </style>
+
+    <mostly-operation id="op"
+            path="collections"
+            op="removeFromCollection"
+            input="[[document.id]]">
+    </mostly-operation>
+
+    <template is="dom-repeat" items="[[document.metadata.collections]]">
+      <mostly-tag>
+       <div class="horizontal layout center" >
+         <a class="title ellipsis" href$="[[urlFor('browse', item.path)]]">[[item.title]]</a>
+         <iron-icon icon="nuxeo:cross" name="remove" on-tap="remove" data-uid$="[[item.id]]"></iron-icon>
+       </div>
+     </mostly-tag>
+    </template>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'playing-document-collections',
+
+      behaviors: [Mostly.RoutingBehavior],
+
+      properties: {
+        document: Object
+      },
+
+      remove: function(evt) {
+        var op = this.$.op;
+        op.params = {
+          'collection': evt.currentTarget.dataset.id
+        };
+        op.execute().then(function() {
+          this.fire('removed-from-collection', {doc: this.document, collectionId: evt.target.dataset.id});
+        }.bind(this));
+      }
+
+    });
+  </script>
+</dom-module>
