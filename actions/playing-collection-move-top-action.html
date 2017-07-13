@@ -1,0 +1,105 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
+<link rel="import" href="../../mostly-elements/behaviors/mostly-i18n-behavior.html">
+
+<!--
+`playing-collection-move-top-action`
+@group Playing UI
+@element playing-collection-move-top-action
+-->
+<dom-module id="playing-collection-move-top-action">
+  <template>
+
+    <style is="custom-style">
+      :host {
+        display: inline-block;
+      }
+
+      ::content iron-icon:hover {
+        fill: var(--nuxeo-link-hover-color);
+      }
+    </style>
+
+    <mostly-operation path="collections" op="moveCollectionMember" id="moveTopOp"></mostly-operation>
+
+    <template id="availability" is="dom-if" if="[[_isAvailable(members)]]">
+      <paper-icon-button noink
+        id="topButton"
+        icon="editor:vertical-align-top">
+      </paper-icon-button>
+      <paper-tooltip for="topButton">[[i18n('collections.moveTop')]]</paper-tooltip>
+    </template>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'playing-collection-move-top-action',
+      behaviors: [Nuxeo.I18nBehavior],
+      properties: {
+        members: {
+          type: Object
+        },
+        allMembers: {
+          type: Object
+        },
+        collection: {
+          type: Object
+        },
+        _member1Idx: {
+          type: Number
+        },
+        _member2Idx: {
+          type: Number
+        }
+      },
+
+      listeners: {
+        'tap': 'moveUp'
+      },
+
+      moveUp: function() {
+        if (this.members && this.members.length === 1 && this.allMembers) {
+          var member2 = this.members[0].uid;
+          var i = 0;
+          for (; i < this.allMembers.length; i++) {
+            if (this.allMembers[i].uid === member2) {
+              if (i > 0) {
+                this._member2Idx = i;
+                this._member1Idx = 0;
+                var member1 = this.allMembers[this._member1Idx].id;
+                this.$.moveTopOp.input = this.collection.id;
+                this.$.moveTopOp.params = {
+                  member1: member1,
+                  member2: member2
+                };
+                this.$.moveTopOp.execute().then(() => {
+                  this.allMembers[this._member2Idx] = this.allMembers.splice(this._member1Idx, 1,
+                    this.allMembers[this._member2Idx])[0];
+                  this.fire('refresh-display', {focusIndex: this._member1Idx});
+                });
+              }
+              break;
+            }
+          }
+        }
+      },
+
+      _isAvailable: function() {
+        if (this.members && this.members.length === 1) {
+          if (this.allMembers && this.allMembers.length <= 1) {
+            return false;
+          }
+          if (this.allMembers[0].uid === this.members[0].uid) {
+            return false;
+          }
+          return true;
+        }
+        return false;
+      }
+
+    });
+  </script>
+</dom-module>

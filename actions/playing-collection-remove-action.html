@@ -1,0 +1,80 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../../nuxeo-ui-elements/nuxeo-icons.html">
+<link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
+<link rel="import" href="../../mostly-elements/behaviors/mostly-i18n-behavior.html">
+
+<!--
+`playing-collection-remove-action`
+@group Playing UI
+@element playing-collection-remove-action
+-->
+<dom-module id="playing-collection-remove-action">
+  <template>
+
+    <style is="custom-style">
+      :host {
+        display: inline-block;
+      }
+
+      ::content iron-icon:hover {
+        fill: var(--nuxeo-link-hover-color);
+      }
+    </style>
+
+    <mostly-operation path="collections" op="removeFromCollection" id="removeOp"></mostly-operation>
+
+    <template id="availability" is="dom-if" if="[[_isAvailable(members, collection)]]">
+      <paper-icon-button noink
+        id="removeButton"
+        icon="nuxeo:remove">
+      </paper-icon-button>
+      <paper-tooltip for="removeButton">[[i18n('collections.remove')]]</paper-tooltip>
+    </template>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'playing-collection-remove-action',
+      behaviors: [Mostly.I18nBehavior],
+      properties: {
+        members: {
+          type: Object
+        },
+        collection: {
+          type: Object
+        }
+      },
+
+      listeners: {
+        'tap': 'remove'
+      },
+
+      remove: function() {
+        if (this.members && this.members.length > 0) {
+          var ids = this.members.map((doc) => {
+            return doc.id;
+          }).join(',');
+          this.$.removeOp.input = 'docs:' + ids;
+          this.$.removeOp.params = {collection: this.collection};
+          this.$.removeOp.execute().then(function() {
+            this.members = [];
+            this.fire('refresh');
+          });
+        }
+      },
+
+      _isAvailable: function(members, collection) {
+        if (collection && collection.contextParameters && collection.contextParameters.permissions) {
+          // NXP-21408: prior to 8.10-HF01 the permissions enricher wouldn't return ReadCanCollect
+          // Action will therefore not be available
+          return collection.contextParameters.permissions.indexOf('ReadCanCollect') > -1;
+        }
+        return false;
+      }
+
+    });
+  </script>
+</dom-module>

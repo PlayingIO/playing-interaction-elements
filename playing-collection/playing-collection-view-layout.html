@@ -1,0 +1,81 @@
+<!--
+`playing-collection-view-layout`
+@group Nuxeo UI
+@element playing-collection-view-layout
+-->
+<dom-module id="playing-collection-view-layout">
+
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 40vh;
+      }
+    </style>
+
+    <mostly-page-provider id="provider"
+            provider="collections"
+            schemas="dublincore,common"
+            enrichers="thumbnail, permissions">
+    </mostly-page-provider>
+
+    <mostly-default-results id="results"
+            items="{{items}}" on-navigate="_navigate"
+            selected-items="{{selectedItems}}"
+            empty-label="[[i18n('collections.noDocument')]]"
+            empty-label-when-filtered="[[i18n('collections.noDocumentWhenFiltered')]]"
+            hide-content-view-actions>
+      <div class="selectionActions">
+        <nuxeo-slot slot="COLLECTION_ACTIONS" model="[[actionContext]]"></nuxeo-slot>
+      </div>
+    </mostly-default-results>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'playing-collection-view-layout',
+      behaviors: [Nuxeo.LayoutBehavior, Nuxeo.FiltersBehavior],
+      properties: {
+        /**
+         * @doctype Collection
+         */
+        document: {
+          type: Object,
+          observer: '_documentChanged'
+        },
+        actionContext: {
+          type: Object,
+          computed: '_actionContext(document, selectedItems)'
+        }
+      },
+
+      _documentChanged: function () {
+        if (this.document && this.hasFacet(this.document, 'Collection')) {
+          this.$.results.nxProvider = this.$.provider;
+          this.$.provider.params = [this.document.uid];
+          this.$.provider.page = 1;
+          this.fire('collection-loaded', {collection: document, provider: this.$.provider});
+          this.$.provider.fetch();
+        }
+      },
+
+      _actionContext: function () {
+        return {collection: this.document, selectedItems: this.selectedItems, items: this.$.results.items};
+      },
+
+      _navigate: function(e) {
+        this.fire('navigate', {
+          doc: e.detail.doc,
+          srcDoc: this.document,
+          isFromCollection: true
+        });
+        e.stopPropagation();
+      }
+
+    });
+  </script>
+
+</dom-module>

@@ -1,0 +1,60 @@
+<!--
+`playing-collection-metadata-layout`
+@group Playing UI
+@element playing-collection-metadata-layout
+-->
+
+<dom-module id="playing-collection-metadata-layout">
+
+  <template>
+    <div role="widget">
+      <label>[[i18n('label.dublincore.title')]]</label>
+      <div name="title">[[document.title]]</div>
+    </div>
+
+    <div role="widget" hidden$="[[!document.description]]">
+      <label>[[i18n('label.dublincore.description')]]</label>
+      <div name="description" class="multiline">[[document.description]]</div>
+    </div>
+
+    <div role="widget" hidden$="[[!document.nature]]">
+      <label>[[i18n('label.dublincore.nature')]]</label>
+      <div name="nature">[[formatDirectory(document.nature)]]</div>
+    </div>
+
+    <playing-directory-suggestion role="widget"
+            label="[[i18n('label.dublincore.subjects')]]"
+            directory-name="l10nsubjects"
+            name="subjects"
+            value="{{document.subjects}}"
+            hidden$="[[!document.subjects.length]]"
+            multiple="true"
+            dbl10n="true"
+            readonly>
+    </playing-directory-suggestion>
+
+    <div role="widget" hidden$="[[!document.coverage]]">
+      <label>[[i18n('label.dublincore.coverage')]]</label>
+      <div name="coverage">[[formatDirectory(document.coverage)]]</div>
+    </div>
+
+    <div role="widget" hidden$="[[!document.expired]]">
+      <label>[[i18n('label.dublincore.expire')]]</label>
+      <div name="expired">[[formatDate(document.expired)]]</div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'playing-collection-metadata-layout',
+      behaviors: [Nuxeo.LayoutBehavior],
+      properties: {
+        /**
+         * @doctype Collection
+         */
+        document: Object
+      }
+    });
+  </script>
+
+</dom-module>
