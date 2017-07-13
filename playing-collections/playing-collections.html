@@ -192,11 +192,11 @@
                   <div class="collection-detail">
                     <div class="date horizontal layout center">
                       <span class="collection-property">[[i18n('collections.lastModified')]] </span>
-                      <nuxeo-date datetime="[[collection.properties.dc:modified]]"></nuxeo-date>
+                      <nuxeo-date datetime="[[collection.updatedAt]]"></nuxeo-date>
                     </div>
                     <div class="layout center">
                       <span class="collection-property">[[i18n('collections.ownedBy')]]</span>
-                      <playing-user-tag user="[[collection.properties.dc:creator]]"></playing-user-tag>
+                      <playing-user-tag user="[[collection.creator]]"></playing-user-tag>
                     </div>
                   </div>
                 </div>

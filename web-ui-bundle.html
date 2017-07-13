@@ -35,7 +35,7 @@
 
 <nuxeo-slot-content name="addToColDocumentAction" slot="DOCUMENT_ACTIONS" order="10">
   <template>
-    <nuxeo-add-to-collection-button document="[[document]]"></nuxeo-add-to-collection-button>
+    <playing-add-to-collection-button document="[[document]]"></playing-add-to-collection-button>
   </template>
 </nuxeo-slot-content>
 
@@ -54,5 +54,43 @@
 <nuxeo-slot-content name="notificationDocumentAction" slot="DOCUMENT_ACTIONS" order="40">
   <template>
     <nuxeo-notifications-toggle-button document="[[document]]"></nuxeo-notifications-toggle-button>
+  </template>
+</nuxeo-slot-content>
+
+
+<!-- COLECTION ACTIONS -->
+
+<nuxeo-slot-content name="removeCollectionAction" slot="COLLECTION_ACTIONS" order="10">
+  <template>
+    <playing-collection-remove-action members="[[selectedItems]]" all-members="[[items]]" collection="[[collection]]">
+    </playing-collection-remove-action>
+  </template>
+</nuxeo-slot-content>
+
+<nuxeo-slot-content name="moveTopCollectionAction" slot="COLLECTION_ACTIONS" order="20">
+  <template>
+    <playing-collection-move-top-action members="[[selectedItems]]" all-members="[[items]]" collection="[[collection]]">
+    </playing-collection-move-top-action>
+  </template>
+</nuxeo-slot-content>
+
+<nuxeo-slot-content name="moveUpCollectionAction" slot="COLLECTION_ACTIONS" order="30">
+  <template>
+    <playing-collection-move-up-action members="[[selectedItems]]" all-members="[[items]]" collection="[[collection]]">
+    </playing-collection-move-up-action>
+  </template>
+</nuxeo-slot-content>
+
+<nuxeo-slot-content name="moveDownCollectionAction" slot="COLLECTION_ACTIONS" order="40">
+  <template>
+    <playing-collection-move-down-action members="[[selectedItems]]" all-members="[[items]]" collection="[[collection]]">
+    </playing-collection-move-down-action>
+  </template>
+</nuxeo-slot-content>
+
+<nuxeo-slot-content name="moveBottomCollectionAction" slot="COLLECTION_ACTIONS" order="50">
+  <template>
+    <playing-collection-move-bottom-action members="[[selectedItems]]" all-members="[[items]]" collection="[[collection]]">
+    </playing-collection-move-bottom-action>
   </template>
 </nuxeo-slot-content>
