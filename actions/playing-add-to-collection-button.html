@@ -39,7 +39,7 @@ Example:
       }
     </style>
 
-    <mostly-operation id="addToCollectionOp" path="documents" op="addToCollection" input="[[document.id]]"></mostly-operation>
+    <mostly-operation id="addToCollectionOp" path="collections" op="addToCollection"></mostly-operation>
     <mostly-operation id="createCollectionOp" path="collections" op="create"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(document)]]">
@@ -153,8 +153,9 @@ Example:
 
       _addToCollection: function() {
         var op = this.$$('#addToCollectionOp');
+        op.input = this.collection;
         op.params = {
-          'collection': this.collection
+          'document': this.document.id
         };
         return op.execute().then(() => {
           this.fire('added-to-collection', {
