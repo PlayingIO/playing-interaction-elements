@@ -37,11 +37,8 @@
 
     </style>
 
-    <mostly-operation id="op"
-            path="collections"
-            op="removeFromCollection"
-            input="[[document.id]]">
-    </mostly-operation>
+    <mostly-operation id="op" path="collections"
+            op="removeFromCollection" input="[[document.id]]"></mostly-operation>
 
     <template is="dom-repeat" items="[[document.metadata.collections]]">
       <mostly-tag>

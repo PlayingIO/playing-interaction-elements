@@ -147,7 +147,7 @@
 
     </style>
 
-    <mostly-operation path="collections" op="removeFromCollection" id="removeFromCollectionOp"></mostly-operation>
+    <mostly-operation id="removeFromCollectionOp" path="collections" op="removeFromCollection"></mostly-operation>
 
     <div class="header ellipsis search-header">
       <template is="dom-if" if="[[_isDisplayMembers]]">
@@ -228,7 +228,7 @@
                       <span class="list-item-property ellipsis">[[member.type]]</span>
                     </div>
                     <iron-icon id="removeFromCollection" class="remove" hidden$="[[!_canRemove(selectedCollection)]]"
-                      icon="nuxeo:remove" data-uid$="[[member.id]]" on-tap="_removeFromCollection">
+                      icon="nuxeo:remove" data-id$="[[member.id]]" on-tap="_removeFromCollection">
                     </iron-icon>
                   </div>
                 </div>
@@ -369,33 +369,32 @@
       _removeFromCollection: function(evt) {
         var op = this.$.removeFromCollectionOp;
         var memberId = evt.currentTarget.dataset.id;
-        op.input = memberId;
         op.params = {
-          'collection': this.selectedCollection
+          'document': memberId
         };
+        op.input = this.selectedCollection.id;
         op.execute().then(() => {
           this._removeFromMembers(evt.target.dataset.id)
-          this.fire('removed-from-collection',
-            {
-              innerRemove: true,
-              doc: memberId,
-              collectionId: evt.target.dataset.id
-
-            }
-          );
+          this.fire('removed-from-collection', {
+            innerRemove: true,
+            doc: memberId,
+            collectionId: evt.target.dataset.id
+          });
         });
       },
 
-      _removeFromMembers: function(uid) {
+      _removeFromMembers: function(id) {
         var memberIndex = memberIndex = this.$.membersList.items.findIndex(function(el) {
-          return el.id === uid;
+          return el.id === id;
         });
         if (memberIndex > -1) {
           this.$.membersList.splice('items', memberIndex, 1);
-          if (this.$.membersList.items.length > memberIndex) {
-            this.$.membersList.selectItem(memberIndex);
-          } else {
-            this.$.membersList.selectItem(this.$.membersList.items.length - 1);
+          if (this.$.membersList.items.length > 0) {
+            if (this.$.membersList.items.length > memberIndex) {
+              this.$.membersList.selectItem(memberIndex);
+            } else {
+              this.$.membersList.selectItem(this.$.membersList.items.length - 1);
+            }
           }
         }
       },
@@ -459,8 +458,6 @@
 
       _canRemove: function(collection) {
         if (collection && collection.metadata && collection.metadata.permissions) {
-          // NXP-21408: prior to 8.10-HF01 the permissions enricher wouldn't return ReadCanCollect
-          // Action will therefore not be available
           return collection.metadata.permissions.indexOf('ReadCanCollect') > -1;
         }
         return false;
