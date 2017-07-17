@@ -37,8 +37,8 @@
 
     </style>
 
-    <mostly-operation id="op" path="collections"
-            op="removeFromCollection" input="[[document.id]]"></mostly-operation>
+    <mostly-operation id="op" path="collection-entries"
+            op="remove" method="delete"></mostly-operation>
 
     <template is="dom-repeat" items="[[document.metadata.collections]]">
       <mostly-tag>
@@ -63,11 +63,15 @@
       remove: function(evt) {
         var op = this.$.op;
         op.params = {
+          'document': this.document.id,
           'collection': evt.currentTarget.dataset.id
         };
-        op.execute().then(function() {
-          this.fire('removed-from-collection', {doc: this.document, collectionId: evt.target.dataset.id});
-        }.bind(this));
+        op.execute().then(() => {
+          this.fire('removed-from-collection', {
+            doc: this.document,
+            collectionId: evt.target.dataset.id
+          });
+        });
       }
 
     });

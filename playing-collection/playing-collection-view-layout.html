@@ -17,7 +17,7 @@
     </style>
 
     <mostly-page-provider id="provider"
-            provider="collections"
+            provider="collection-entries"
             schemas="dublincore,common"
             enrichers="thumbnail, permissions">
     </mostly-page-provider>
@@ -55,7 +55,7 @@
       _documentChanged: function () {
         if (this.document && this.hasFacet(this.document, 'Collection')) {
           this.$.results.nxProvider = this.$.provider;
-          this.$.provider.params = { id: this.document.id };
+          this.$.provider.params = { parent: this.document.id };
           this.$.provider.page = 1;
           this.fire('collection-loaded', {collection: document, provider: this.$.provider});
           this.$.provider.fetch();

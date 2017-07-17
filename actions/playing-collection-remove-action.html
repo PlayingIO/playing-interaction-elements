@@ -23,7 +23,7 @@
       }
     </style>
 
-    <mostly-operation path="collections" op="removeFromCollection" id="removeOp"></mostly-operation>
+    <mostly-operation id="removeOp" path="collection-entris" op="remove" method="delete"></mostly-operation>
 
     <template id="availability" is="dom-if" if="[[_isAvailable(members, collection)]]">
       <paper-icon-button noink
@@ -57,8 +57,10 @@
           var ids = this.members.map((doc) => {
             return doc.id;
           }).join(',');
-          this.$.removeOp.input = 'docs:' + ids;
-          this.$.removeOp.params = {collection: this.collection};
+          this.$.removeOp.params = {
+            document: ids,
+            collection: this.collection
+          };
           this.$.removeOp.execute().then(function() {
             this.members = [];
             this.fire('refresh');

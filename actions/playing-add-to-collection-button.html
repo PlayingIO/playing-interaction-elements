@@ -39,7 +39,7 @@ Example:
       }
     </style>
 
-    <mostly-operation id="addToCollectionOp" path="collections" op="addToCollection"></mostly-operation>
+    <mostly-operation id="addToCollectionOp" path="collection-entries" op="create" method="post"></mostly-operation>
     <mostly-operation id="createCollectionOp" path="collections" op="create" method="post"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(document)]]">
@@ -54,6 +54,7 @@ Example:
         <mostly-select2 id="nxSelect"
                 path="collections"
                 operation="suggestion"
+                search-field="title"
                 min-chars="0"
                 placeholder="[[i18n('addToCollectionButton.dialog.select')]]"
                 value="{{collection}}"
@@ -153,9 +154,9 @@ Example:
 
       _addToCollection: function() {
         var op = this.$$('#addToCollectionOp');
-        op.input = this.collection;
         op.params = {
-          'document': this.document.id
+          'document': this.document.id,
+          'collection': this.collection
         };
         return op.execute().then(() => {
           this.fire('added-to-collection', {
