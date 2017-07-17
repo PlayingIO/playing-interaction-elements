@@ -40,7 +40,7 @@ Example:
     </style>
 
     <mostly-operation id="addToCollectionOp" path="collections" op="addToCollection"></mostly-operation>
-    <mostly-operation id="createCollectionOp" path="collections" op="create"></mostly-operation>
+    <mostly-operation id="createCollectionOp" path="collections" op="create" method="post"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(document)]]">
       <paper-icon-button icon="[[icon]]" on-tap="_toggleDialog" noink></paper-icon-button>
@@ -136,10 +136,10 @@ Example:
       _add: function() {
         if (this._isNew()) {
           var op = this.$$('#createCollectionOp');
-          var name = this.$.nxSelect.textContent.trim();
+          var title = this.$.nxSelect.textContent.trim();
           op.input = undefined;
           op.params = {
-            'name': name,
+            'title': title,
             'description': this.description
           };
           return op.execute().then((response) => {

@@ -67,10 +67,10 @@
       },
 
       _isAvailable: function(members, collection) {
-        if (collection && collection.contextParameters && collection.contextParameters.permissions) {
+        if (collection && collection.metadata && collection.metadata.permissions) {
           // NXP-21408: prior to 8.10-HF01 the permissions enricher wouldn't return ReadCanCollect
           // Action will therefore not be available
-          return collection.contextParameters.permissions.indexOf('ReadCanCollect') > -1;
+          return collection.metadata.permissions.indexOf('ReadCanCollect') > -1;
         }
         return false;
       }

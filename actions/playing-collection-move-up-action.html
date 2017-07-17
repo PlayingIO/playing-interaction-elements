@@ -62,10 +62,10 @@
 
       moveUp: function() {
         if (this.members && this.members.length === 1 && this.allMembers) {
-          var member2 = this.members[0].uid;
+          var member2 = this.members[0].id;
           var i = 0;
           for (; i < this.allMembers.length; i++) {
-            if (this.allMembers[i].uid === member2) {
+            if (this.allMembers[i].id === member2) {
               if (i > 0) {
                 this._member2Idx = i;
                 this._member1Idx = i - 1;
@@ -92,7 +92,7 @@
           if (this.allMembers && this.allMembers.length <= 1) {
             return false;
           }
-          if (this.allMembers[0].uid === this.members[0].uid) {
+          if (this.allMembers[0].id === this.members[0].id) {
             return false;
           }
           return true;

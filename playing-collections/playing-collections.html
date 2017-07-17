@@ -167,19 +167,19 @@
 
         <div id="collections" class="collections" hidden$="{{_isDisplayMembers}}">
           <mostly-page-provider id="collectionsProvider"
-             provider="collections"
-             page-size="40"
-             params='{}'
-             sort='{"createdAt":"-1"}'
-             schemas="dublincore,common"
-             enrichers="permissions">
+                  provider="collections"
+                  page-size="40"
+                  params='{}'
+                  sort='{"createdAt":"-1"}'
+                  schemas="dublincore,common"
+                  enrichers="permissions">
           </mostly-page-provider>
 
           <mostly-data-list nx-provider="collectionsProvider" id="collectionsList"
-            selected-item="{{selectedCollection}}"
-            selection-enabled as="collection"
-            empty-label="[[i18n('collections.empty')]]"
-            empty-label-when-filtered="[[i18n('collections.empty')]]">
+                  selected-item="{{selectedCollection}}"
+                  selection-enabled as="collection"
+                  empty-label="[[i18n('collections.empty')]]"
+                  empty-label-when-filtered="[[i18n('collections.empty')]]">
             <template>
               <div tabindex$="{{tabIndex}}" class$="[[_computedClass(selected)]]">
                 <div class="collection-box vertical layout">
@@ -211,10 +211,10 @@
 
         <div id="queue" hidden$="{{!_isDisplayMembers}}">
           <mostly-data-list id="membersList"
-            selected-item="{{selectedMember}}"
-            selection-enabled as="member"
-            empty-label="[[i18n('collections.members.empty')]]"
-            empty-label-when-filtered="[[i18n('collections.members.empty')]]">
+                  selected-item="{{selectedMember}}"
+                  selection-enabled as="member"
+                  empty-label="[[i18n('collections.members.empty')]]"
+                  empty-label-when-filtered="[[i18n('collections.members.empty')]]">
             <template>
               <div tabindex$="{{tabIndex}}" class$="[[_computedClass(selected)]]">
 
@@ -227,8 +227,8 @@
                       <span class="list-item-title ellipsis">[[member.title]]</span>
                       <span class="list-item-property ellipsis">[[member.type]]</span>
                     </div>
-                    <iron-icon  id="removeFromCollection" class="remove" hidden$="[[!_canRemove(selectedCollection)]]"
-                      icon="nuxeo:remove" data-uid$="[[member.uid]]" on-tap="_removeFromCollection">
+                    <iron-icon id="removeFromCollection" class="remove" hidden$="[[!_canRemove(selectedCollection)]]"
+                      icon="nuxeo:remove" data-uid$="[[member.id]]" on-tap="_removeFromCollection">
                     </iron-icon>
                   </div>
                 </div>
@@ -354,8 +354,8 @@
 
       displayMembers: function(collection, member) {
         this._isDisplayMembers = true;
-        if (member && member.uid) {
-          if (this.selectedCollection && collection && this.selectedCollection.uid === collection.uid) {
+        if (member && member.id) {
+          if (this.selectedCollection && collection && this.selectedCollection.id === collection.id) {
             this.$.membersList.selectItem(member);
             this.$.membersList.scrollToItem(member);
           }
@@ -368,27 +368,27 @@
 
       _removeFromCollection: function(evt) {
         var op = this.$.removeFromCollectionOp;
-        var memberId = evt.currentTarget.dataset.uid;
+        var memberId = evt.currentTarget.dataset.id;
         op.input = memberId;
         op.params = {
           'collection': this.selectedCollection
         };
-        op.execute().then(function() {
-          this._removeFromMembers(evt.target.dataset.uid)
+        op.execute().then(() => {
+          this._removeFromMembers(evt.target.dataset.id)
           this.fire('removed-from-collection',
             {
               innerRemove: true,
               doc: memberId,
-              collectionId: evt.target.dataset.uid
+              collectionId: evt.target.dataset.id
 
             }
           );
-        }.bind(this));
+        });
       },
 
       _removeFromMembers: function(uid) {
         var memberIndex = memberIndex = this.$.membersList.items.findIndex(function(el) {
-          return el.uid === uid;
+          return el.id === uid;
         });
         if (memberIndex > -1) {
           this.$.membersList.splice('items', memberIndex, 1);
@@ -411,7 +411,7 @@
       _selectedMemberChanged: function(doc) {
         if (doc) {
           if (doc.isVersion) {
-            this.navigateTo('document', doc.uid);
+            this.navigateTo('document', doc.id);
           } else {
             this.navigateTo('browse', doc.path);
           }
@@ -429,23 +429,23 @@
       },
 
       ready: function() {
-        window.addEventListener('added-to-collection', function() {
+        window.addEventListener('added-to-collection', () => {
           if (this.visible) {
             this._refreshCollections();
           }
-        }.bind(this));
-        window.addEventListener('removed-from-collection', function(e) {
+        });
+        window.addEventListener('removed-from-collection', (e) => {
           if (this.visible) {
             if (e.detail.innerRemove) {
               return;
             }
-            if (this.selectedCollection && this.selectedCollection.uid === e.detail.collectionId) {
-              this._removeFromMembers(e.detail.doc.uid);
+            if (this.selectedCollection && this.selectedCollection.id === e.detail.collectionId) {
+              this._removeFromMembers(e.detail.doc.id);
             } else if (!this._isDisplayMembers) {
               this._refreshCollections();
             }
           }
-        }.bind(this));
+        });
 
       },
 
@@ -458,10 +458,10 @@
       },
 
       _canRemove: function(collection) {
-        if (collection && collection.contextParameters && collection.contextParameters.permissions) {
+        if (collection && collection.metadata && collection.metadata.permissions) {
           // NXP-21408: prior to 8.10-HF01 the permissions enricher wouldn't return ReadCanCollect
           // Action will therefore not be available
-          return collection.contextParameters.permissions.indexOf('ReadCanCollect') > -1;
+          return collection.metadata.permissions.indexOf('ReadCanCollect') > -1;
         }
         return false;
       },
@@ -474,7 +474,7 @@
       loadCollection: function(collection, provider) {
         if (provider) {
           this.$.membersList.nxProvider = provider;
-          if (collection && this.selectedCollection && this.selectedCollection.uid === collection.uid) {
+          if (collection && this.selectedCollection && this.selectedCollection.id === collection.id) {
             this.displayCollections();
           }
         }
