@@ -30,7 +30,6 @@
   </template>
 </nuxeo-slot-content>
 
-
 <!-- DOCUMENT ACTIONS -->
 
 <nuxeo-slot-content name="addToColDocumentAction" slot="DOCUMENT_ACTIONS" order="10">
@@ -57,6 +56,14 @@
   </template>
 </nuxeo-slot-content>
 
+<!-- RESULT SELECTION ACTIONS -->
+
+<nuxeo-slot-content name="addToCollectionSelectionAction" slot="RESULTS_SELECTION_ACTIONS" order="10">
+  <template>
+    <playing-add-to-collection-bulk-button documents="[[selectedItems]]">
+    </playing-add-to-collection-bulk-button>
+  </template>
+</nuxeo-slot-content>
 
 <!-- COLECTION ACTIONS -->
 

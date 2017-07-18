@@ -1,0 +1,198 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../paper-button/paper-button.html">
+<link rel="import" href="../../paper-dialog/paper-dialog.html">
+<link rel="import" href="../../paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../paper-input/paper-textarea.html">
+<link rel="import" href="../../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
+<link rel="import" href="../../mostly-elements/behaviors/mostly-i18n-behavior.html">
+<link rel="import" href="../../mostly-elements/behaviors/mostly-filters-behavior.html">
+<link rel="import" href="../../mostly-elements/widgets/mostly-dialog.html">
+<link rel="import" href="../../mostly-elements/widgets/mostly-select2.html">
+
+<!--
+`playing-add-to-collection-bulk-button`
+@group Playing UI
+@element playing-add-to-collection-bulk-button
+-->
+<dom-module id="playing-add-to-collection-bulk-button">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+
+      mostly-select2, textarea {
+        width: 100%;
+      }
+
+      .required {
+        color: var(--paper-input-container-invalid-color, red);
+        padding: 4px;
+      }
+
+      ::content iron-icon:hover {
+        fill: var(--nuxeo-link-hover-color);
+      }
+    </style>
+
+    <mostly-operation id="addToCollectionOp" path="collection-entries" op="create" method="post"></mostly-operation>
+    <mostly-operation id="createCollectionOp" path="collections" op="create" method="post"></mostly-operation>
+
+    <template is="dom-if" if="[[_isAvailable(documents.*)]]">
+      <paper-icon-button noink icon="nuxeo:collections" id="addColBut" on-tap="_toggleDialog"></paper-icon-button>
+      <paper-tooltip for="addColBut">[[i18n('addToCollectionButton.tooltip')]]</paper-tooltip>
+    </template>
+
+    <mostly-dialog id="dialog" on-iron-overlay-closed="_resetPopup" no-auto-focus with-backdrop reparent>
+      <paper-dialog-scrollable>
+        <h2>[[i18n('addToCollectionButton.dialog.heading')]]</h2>
+        <label>[[i18n('addToCollectionButton.dialog.collections')]]<span class="required">*</span></label>
+        <mostly-select2 id="nxSelect"
+                path="collections"
+                operation="suggestion"
+                search-field="title"
+                min-chars="0"
+                placeholder="[[i18n('addToCollectionButton.dialog.select')]]"
+                value="{{collection}}"
+                tagging="true"
+                query-results-filter="[[resultsFilter]]"
+                result-formatter="[[resultAndSelectionFormatter]]"
+                selection-formatter="[[resultAndSelectionFormatter]]"
+                new-entry-formatter="[[newEntryFormatter]]">
+        </mostly-select2>
+        <paper-textarea label="[[i18n('addToCollectionButton.dialog.description')]]"
+                value="{{description::input}}"
+                hidden$="[[!_isNew(collection)]]"
+                always-float-label>
+        </paper-textarea>
+      </paper-dialog-scrollable>
+
+      <div class="buttons">
+        <paper-button noink dialog-dismiss>[[i18n('addToCollectionButton.dialog.cancel')]]</paper-button>
+        <paper-button noink class="primary" on-tap="add" disabled$="[[!_isValid(collection)]]">
+          [[i18n('addToCollectionButton.dialog.add')]]
+        </paper-button>
+      </div>
+    </mostly-dialog>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'playing-add-to-collection-bulk-button',
+      behaviors: [Mostly.I18nBehavior, Mostly.FiltersBehavior],
+      properties: {
+        documents: {
+          type: Array,
+          notify: true,
+          value: []
+        },
+
+        collection: {
+          type: String,
+          value: ''
+        },
+
+        resultsFilter: {
+          type: Function,
+          value: function() {
+            return this._resultsFilter.bind(this);
+          }
+        },
+
+        resultAndSelectionFormatter: {
+          type: Function,
+          value: function() {
+            return this._resultAndSelectionFormatter.bind(this);
+          }
+        },
+
+        newEntryFormatter: {
+          type: Function,
+          value: function() {
+            return this._newEntryFormatter.bind(this);
+          }
+        }
+      },
+
+      _isAvailable: function() {
+        if (this.documents && this.documents.length > 0) {
+          return this.documents.every(function(doc) {
+            return !this.hasFacet(doc, 'NotCollectionMember');
+          }.bind(this));
+        }
+        return false;
+      },
+
+      _toggleDialog: function() {
+        this.$.dialog.toggle();
+      },
+
+      add: function() {
+        if (this._isNew()) {
+          var op = this.$$('#createCollectionOp');
+          var title = this.$.nxSelect.textContent.trim();
+          op.input = undefined;
+          op.params = {
+            'title': title,
+            'description': this.description
+          };
+          return op.execute().then((response) => {
+            this.collection = response.data.id;
+            this._addToCollection();
+          });
+        } else {
+          this._addToCollection();
+        }
+      },
+
+      _addToCollection: function() {
+        var op = this.$$('#addToCollectionOp');
+        var uids = this.documents.map((doc) => doc.id);
+        op.params = {
+          documents: uids,
+          collection: this.collection
+        };
+        return op.execute().then(() => {
+          this.fire('added-to-collection', {
+            docIds: uids,
+            collectionId: this.collection
+          });
+          this._resetPopup();
+          this._toggleDialog();
+        });
+      },
+
+      _resultsFilter: function(entry) {
+        return entry.id.indexOf('-999999') === -1;
+      },
+
+      _resultAndSelectionFormatter: function(item) {
+        var label = item.displayLabel || item.title;
+        // if we are adding a new entry with the _newEntryFormatter
+        // we don't want to escape the HTML
+        return item.id === -1 ? label : this.$.nxSelect.escapeHTML(label);
+      },
+
+      _newEntryFormatter: function(term) {
+        return {id: -1, displayLabel: '<iron-icon icon="icons:add" item-icon></iron-icon>' + term};
+      },
+
+      _isValid: function() {
+        return this.collection !== '';
+      },
+
+      _isNew: function() {
+        return this.collection === '-1';
+      },
+
+      _resetPopup: function() {
+        this.collection = '';
+        this.description = '';
+      }
+    });
+  </script>
+
+</dom-module>
