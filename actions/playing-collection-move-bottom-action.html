@@ -48,10 +48,10 @@
         collection: {
           type: Object
         },
-        _member1Idx: {
+        _targetIdx: {
           type: Number
         },
-        _member2Idx: {
+        _selectIdx: {
           type: Number
         }
       },
@@ -62,23 +62,23 @@
 
       moveBottom: function() {
         if (this.members && this.members.length === 1 && this.allMembers) {
-          var member2 = this.members[0].id;
+          var select = this.members[0].id;
           var i = 0;
           for (; i < this.allMembers.length; i++) {
-            if (this.allMembers[i].id === member2) {
+            if (this.allMembers[i].id === select) {
               if (i < this.allMembers.length - 1) {
-                this._member2Idx = i;
-                this._member1Idx = this.allMembers.length - 1;
-                var member1 = this.allMembers[this._member1Idx].id;
+                this._selectIdx = i;
+                this._targetIdx = this.allMembers.length - 1;
+                var target = this.allMembers[this._targetIdx].id;
                 this.$.moveBottomOp.input = this.collection.id;
                 this.$.moveBottomOp.params = {
-                  member1: member1,
-                  member2: member2
+                  target: target,
+                  select: select
                 };
                 this.$.moveBottomOp.execute().then(() => {
-                  this.allMembers[this._member2Idx] = this.allMembers.splice(this._member1Idx, 1,
-                    this.allMembers[this._member2Idx])[0];
-                  this.fire('refresh-display', {focusIndex: this._member1Idx});
+                  this.allMembers[this._selectIdx] = this.allMembers.splice(this._targetIdx, 1,
+                    this.allMembers[this._selectIdx])[0];
+                  this.fire('refresh-display', {focusIndex: this._targetIdx});
                 });
               }
               break;
