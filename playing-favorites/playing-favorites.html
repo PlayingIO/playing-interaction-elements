@@ -91,15 +91,15 @@
     </style>
 
     <mostly-operation id="removeFromFavOp"
-            path="favorites" op="removeFromFavorites"></mostly-operation>
+            path="favorites" op="remove" method="delete"></mostly-operation>
 
     <mostly-operation id="fetchFavOp"
-            path="favorites" op="fetchFavorites"
+            path="favorites" op="find"
             method="get" input="0"
             response="favorite"></mostly-operation>
 
     <mostly-page-provider id="favoritesProvider"
-            provider="collections"
+            provider="collection-entries"
             page-size="50"
             schemas="dublincore,common"
             enrichers="thumbnail">
@@ -107,7 +107,8 @@
 
     <div class="header">[[i18n('app.favorites')]]</div>
     <div class="content">
-      <mostly-data-list nx-provider="favoritesProvider" id="favoritesList"
+      <mostly-data-list id="favoritesList"
+              nx-provider="favoritesProvider"
               selected-item="{{selectedFavorite}}" items="{{favorites}}"
               selection-enabled as="favorite"
               empty-label="[[i18n('favorites.empty')]]"
@@ -163,22 +164,21 @@
       },
 
       _refresh: function() {
-        this._fetchFavorite().then(function(favorite) {
+        this._fetchFavorite().then((favorite) => {
           this.$.favoritesProvider.params = [favorite.id];
           this.$.favoritesProvider.page = 1;
           this.$.favoritesProvider.fetch();
-        }.bind(this));
+        });
       },
 
       _fetchFavorite: function() {
         if (this.favorite) {
           return Promise.resolve(this.favorite);
         } else {
-          return this.$.fetchFavOp.execute()
-            .then(function(resp) {
-              this.favorite = resp;
-              return resp;
-            }.bind(this));
+          return this.$.fetchFavOp.execute().then((resp) => {
+            this.favorite = resp.data;
+            return this.favorite;
+          });
         }
       },
 
@@ -204,9 +204,9 @@
         e.stopImmediatePropagation();
         var docUid = e.model.favorite.id;
         this.$.removeFromFavOp.input = docUid;
-        this.$.removeFromFavOp.execute().then(function() {
+        this.$.removeFromFavOp.execute().then(() => {
           this.fire('removed-from-favorites', {docUid: docUid});
-        }.bind(this));
+        });
       }
 
     });
