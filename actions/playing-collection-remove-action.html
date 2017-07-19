@@ -54,9 +54,7 @@
 
       remove: function() {
         if (this.members && this.members.length > 0) {
-          var ids = this.members.map((doc) => {
-            return doc.id;
-          }).join(',');
+          var ids = this.members.map((doc) => doc.id).join(',');
           this.$.removeOp.params = {
             document: ids,
             collection: this.collection
