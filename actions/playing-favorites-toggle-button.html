@@ -31,8 +31,8 @@ Example:
       }
     </style>
 
-    <mostly-operation id="opAdd" path="favorites" op="addToFavorites" input="[[document.id]]"></mostly-operation>
-    <mostly-operation id="opRemove" path="favorites" op="removeFromFavorites" input="[[document.id]]"></mostly-operation>
+    <mostly-operation id="opAdd" path="favorites" op="create" method="post"></mostly-operation>
+    <mostly-operation id="opRemove" path="favorites" op="remove" method="delete" input="[[document.id]]"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(document)]]">
       <paper-icon-button icon="[[icon]]" noink></paper-icon-button>
@@ -93,11 +93,17 @@ Example:
 
       _toggle: function() {
         if (!this.favorite) {
+          this.$.opAdd.params = {
+            document: this.document.id
+          };
           this.$.opAdd.execute().then(function() {
             this.fire('added-to-favorites', {doc: this.document});
             this.favorite = true;
           }.bind(this));
         } else {
+          this.$.opAdd.params = {
+            document: this.document.id
+          };
           this.$.opRemove.execute().then(function() {
             this.fire('removed-from-favorites', {doc: this.document});
             this.favorite = false;
