@@ -165,7 +165,7 @@
 
       _refresh: function() {
         this._fetchFavorite().then((favorite) => {
-          this.$.favoritesProvider.params = [favorite.id];
+          this.$.favoritesProvider.params = { parent: favorite.id };
           this.$.favoritesProvider.page = 1;
           this.$.favoritesProvider.fetch();
         });
