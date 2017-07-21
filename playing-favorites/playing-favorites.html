@@ -91,11 +91,11 @@
     </style>
 
     <mostly-operation id="removeFromFavOp"
-            path="favorites" op="remove" method="delete"></mostly-operation>
+            path="favorites" op="removeFromFavorites" input="me"></mostly-operation>
 
     <mostly-operation id="fetchFavOp"
-            path="favorites" op="find"
-            method="get" input="0"
+            path="favorites"
+            method="get" input="me"
             response="favorite"></mostly-operation>
 
     <mostly-page-provider id="favoritesProvider"
@@ -203,7 +203,9 @@
       _removeFromFavorites: function(e) {
         e.stopImmediatePropagation();
         var docUid = e.model.favorite.id;
-        this.$.removeFromFavOp.input = docUid;
+        this.$.removeFromFavOp.params = {
+          document: docUid
+        };
         this.$.removeFromFavOp.execute().then(() => {
           this.fire('removed-from-favorites', {docUid: docUid});
         });
