@@ -17,7 +17,7 @@
     </style>
 
     <mostly-page-provider id="provider"
-            provider="document-entries"
+            provider="catalogs"
             schemas="dublincore,common"
             enrichers="thumbnail, permissions">
     </mostly-page-provider>
@@ -57,13 +57,20 @@
           this.$.results.nxProvider = this.$.provider;
           this.$.provider.params = { parent: this.document.id };
           this.$.provider.page = 1;
-          this.fire('collection-loaded', {collection: document, provider: this.$.provider});
+          this.fire('collection-loaded', {
+            collection: document,
+            provider: this.$.provider
+          });
           this.$.provider.fetch();
         }
       },
 
       _actionContext: function () {
-        return {collection: this.document, selectedItems: this.selectedItems, items: this.$.results.items};
+        return {
+          collection: this.document,
+          selectedItems: this.selectedItems,
+          items: this.$.results.items
+        };
       },
 
       _navigate: function(e) {

@@ -99,7 +99,7 @@
             response="favorite"></mostly-operation>
 
     <mostly-page-provider id="favoritesProvider"
-            provider="document-entries"
+            provider="catalogs"
             page-size="50"
             schemas="dublincore,common"
             enrichers="thumbnail">
@@ -118,11 +118,11 @@
             <div class="list-item-box vertical layout">
               <div class="list-item-info horizontal layout center" >
                 <div class="vertical layout center">
-                  <playing-document-thumbnail document="[[favorite]]"></playing-document-thumbnail>
+                  <playing-document-thumbnail document="[[favorite.document]]"></playing-document-thumbnail>
                 </div>
-                <span class="list-item-title ellipsis flex">[[favorite.title]]</span>
+                <span class="list-item-title ellipsis flex">[[favorite.document.title]]</span>
                 <iron-icon id="removeFromFavorites" class="remove"
-                        icon="nuxeo:remove" data-id$="[[favorite.id]]" on-tap="_removeFromFavorites">
+                        icon="nuxeo:remove" data-id$="[[favorite.document.id]]" on-tap="_removeFromFavorites">
                 </iron-icon>
               </div>
             </div>
@@ -190,12 +190,14 @@
         return classes;
       },
 
-      _selectedFavoriteChanged: function(doc) {
-        if (doc) {
-          if (doc.isVersion) {
-            this.navigateTo('document', doc.id);
-          } else {
-            this.navigateTo('browse', doc.path);
+      _selectedFavoriteChanged: function(favorite) {
+        if (favorite) {
+          if (favorite.document) {
+            if (favorite.document.isVersion) {
+              this.navigateTo('document', favorite.document.id);
+            } else {
+              this.navigateTo('browse', favorite.document.path);
+            }
           }
         }
       },

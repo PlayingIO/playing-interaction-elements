@@ -61,7 +61,11 @@
       },
 
       _actionContext: function() {
-        return {collection: this.collection, selectedItems: this.selectedItems, items: this.$.results.items};
+        return {
+          collection: this.collection,
+          selectedItems: this.selectedItems,
+          items: this.$.results.items
+        };
       }
 
     });
