@@ -109,8 +109,10 @@
     <div class="content">
       <mostly-data-list id="favoritesList"
               nx-provider="favoritesProvider"
-              selected-item="{{selectedFavorite}}" items="{{favorites}}"
-              selection-enabled as="favorite"
+              selected-item="{{selectedFavorite}}"
+              items="{{favorites}}"
+              selection-enabled
+              as="favorite"
               empty-label="[[i18n('favorites.empty')]]"
               empty-label-when-filtered="[[i18n('favorites.empty')]]">
         <template>
@@ -122,7 +124,7 @@
                 </div>
                 <span class="list-item-title ellipsis flex">[[favorite.document.title]]</span>
                 <iron-icon id="removeFromFavorites" class="remove"
-                        icon="nuxeo:remove" data-id$="[[favorite.document.id]]" on-tap="_removeFromFavorites">
+                        icon="nuxeo:remove" data-id$="[[favorite.id]]" on-tap="_removeFromFavorites">
                 </iron-icon>
               </div>
             </div>
@@ -204,7 +206,7 @@
 
       _removeFromFavorites: function(e) {
         e.stopImmediatePropagation();
-        var docUid = e.model.favorite.id;
+        var docUid = e.model.favorite.document.id;
         this.$.removeFromFavOp.params = {
           document: docUid
         };
