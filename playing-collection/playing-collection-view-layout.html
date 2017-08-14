@@ -57,6 +57,9 @@
           this.$.results.nxProvider = this.$.provider;
           this.$.provider.params = { parent: this.document.id };
           this.$.provider.page = 1;
+          this.$.provider.interceptor = function(docs) {
+            return docs.map(doc => doc.document);
+          };
           this.fire('collection-loaded', {
             collection: document,
             provider: this.$.provider
