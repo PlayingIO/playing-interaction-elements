@@ -19,32 +19,32 @@
             value="{{document.description}}">
     </nuxeo-textarea>
 
-    <playing-directory-suggestion role="widget" label="[[i18n('label.dublincore.nature')]]"
+    <playing-vocabulary-suggestion role="widget" label="[[i18n('label.dublincore.nature')]]"
             name="nature"
-            directory-name="nature"
+            vocabulary-name="nature"
             value="{{document.nature}}"
             placeholder="[[i18n('dublincoreEdit.directorySuggestion.placeholder')]]"
             min-chars="0">
-    </playing-directory-suggestion>
+    </playing-vocabulary-suggestion>
 
-    <playing-directory-suggestion role="widget" label="[[i18n('label.dublincore.subjects')]]"
-            directory-name="l10nsubjects"
+    <playing-vocabulary-suggestion role="widget" label="[[i18n('label.dublincore.subjects')]]"
+            vocabulary-name="l10nsubjects"
             name="subjects"
             value="{{document.subjects}}"
             multiple="true"
             dbl10n="true"
             placeholder="[[i18n('dublincoreEdit.directorySuggestion.placeholder')]]"
             min-chars="0">
-    </playing-directory-suggestion>
+    </playing-vocabulary-suggestion>
 
-    <playing-directory-suggestion role="widget" label="[[i18n('label.dublincore.coverage')]]"
-            directory-name="l10ncoverage"
+    <playing-vocabulary-suggestion role="widget" label="[[i18n('label.dublincore.coverage')]]"
+            vocabulary-name="l10ncoverage"
             name="coverage"
             value="{{document.coverage}}"
             dbl10n="true"
             placeholder="[[i18n('dublincoreEdit.directorySuggestion.placeholder')]]"
             min-chars="0">
-    </playing-directory-suggestion>
+    </playing-vocabulary-suggestion>
 
     <nuxeo-date-picker role="widget" label="[[i18n('label.dublincore.expire')]]" name="expired"
             value="{{document.expired}}">

@@ -22,16 +22,16 @@
       <div name="nature">[[formatDirectory(document.nature)]]</div>
     </div>
 
-    <playing-directory-suggestion role="widget"
+    <playing-vocabulary-suggestion role="widget"
             label="[[i18n('label.dublincore.subjects')]]"
-            directory-name="l10nsubjects"
+            vocabulary-name="l10nsubjects"
             name="subjects"
             value="{{document.subjects}}"
             hidden$="[[!document.subjects.length]]"
             multiple="true"
             dbl10n="true"
             readonly>
-    </playing-directory-suggestion>
+    </playing-vocabulary-suggestion>
 
     <div role="widget" hidden$="[[!document.coverage]]">
       <label>[[i18n('label.dublincore.coverage')]]</label>
