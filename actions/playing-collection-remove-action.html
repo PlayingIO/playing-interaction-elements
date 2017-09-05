@@ -57,7 +57,7 @@
           var ids = this.members.map((doc) => doc.id).join(',');
           this.$.removeOp.params = {
             document: ids,
-            collection: this.collection.id
+            parent: this.collection.id
           };
           this.$.removeOp.execute().then(() => {
             this.members = [];

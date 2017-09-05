@@ -156,7 +156,7 @@ Example:
         var op = this.$$('#addToCollectionOp');
         op.params = {
           'document': this.document.id,
-          'collection': this.collection
+          'parent': this.collection
         };
         return op.execute().then(() => {
           this.fire('added-to-collection', {

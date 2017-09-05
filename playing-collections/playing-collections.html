@@ -371,7 +371,7 @@
         var memberId = evt.currentTarget.dataset.id;
         op.params = {
           document: memberId,
-          collection: this.selectedCollection.id
+          parent: this.selectedCollection.id
         };
         op.execute().then(() => {
           this._removeFromMembers(evt.target.dataset.id)

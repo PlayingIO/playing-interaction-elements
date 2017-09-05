@@ -63,7 +63,7 @@
         var op = this.$.removeOp;
         op.params = {
           'document': this.document.id,
-          'collection': evt.currentTarget.dataset.id
+          'parent': evt.currentTarget.dataset.id
         };
         op.execute().then(() => {
           this.fire('removed-from-collection', {

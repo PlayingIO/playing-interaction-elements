@@ -153,7 +153,7 @@
         var uids = this.documents.map((doc) => doc.id);
         op.params = {
           documents: uids,
-          collection: this.collection
+          parent: this.collection
         };
         return op.execute().then(() => {
           this.fire('added-to-collection', {
