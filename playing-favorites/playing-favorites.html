@@ -99,9 +99,8 @@
             response="favorite"></mostly-operation>
 
     <mostly-page-provider id="favoritesProvider"
-            provider="catalogs"
+            provider="user-favorites"
             page-size="50"
-            schemas="parent,document,*"
             enrichers="thumbnail">
     </mostly-page-provider>
 
@@ -120,9 +119,9 @@
             <div class="list-item-box vertical layout">
               <div class="list-item-info horizontal layout center" >
                 <div class="vertical layout center">
-                  <playing-document-thumbnail document="[[favorite.document]]"></playing-document-thumbnail>
+                  <playing-document-thumbnail document="[[favorite]]"></playing-document-thumbnail>
                 </div>
-                <span class="list-item-title ellipsis flex">[[favorite.document.title]]</span>
+                <span class="list-item-title ellipsis flex">[[favorite.title]]</span>
                 <iron-icon id="removeFromFavorites" class="remove"
                         icon="nuxeo:remove" data-id$="[[favorite.id]]" on-tap="_removeFromFavorites">
                 </iron-icon>
@@ -167,7 +166,7 @@
 
       _refresh: function() {
         this._fetchFavorite().then((favorite) => {
-          this.$.favoritesProvider.params = { parent: favorite.id };
+          this.$.favoritesProvider.params = { favorite: favorite.id };
           this.$.favoritesProvider.page = 1;
           this.$.favoritesProvider.fetch();
         });
@@ -194,11 +193,11 @@
 
       _selectedFavoriteChanged: function(favorite) {
         if (favorite) {
-          if (favorite.document) {
-            if (favorite.document.isVersion) {
-              this.navigateTo('document', favorite.document.id);
+          if (favorite) {
+            if (favorite.isVersion) {
+              this.navigateTo('document', favorite.id);
             } else {
-              this.navigateTo('browse', favorite.document.path);
+              this.navigateTo('browse', favorite.path);
             }
           }
         }
@@ -206,7 +205,7 @@
 
       _removeFromFavorites: function(e) {
         e.stopImmediatePropagation();
-        var docUid = e.model.favorite.document.id;
+        var docUid = e.model.favorite.id;
         this.$.removeFromFavOp.params = {
           document: docUid
         };
