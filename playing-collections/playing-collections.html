@@ -147,7 +147,7 @@
 
     </style>
 
-    <mostly-operation id="removeFromCollectionOp" path="catalogs" op="remove" method="delete"></mostly-operation>
+    <mostly-operation id="removeFromCollectionOp" path="user-collections" op="remove" method="delete"></mostly-operation>
 
     <div class="header ellipsis search-header">
       <template is="dom-if" if="[[_isDisplayMembers]]">
@@ -171,7 +171,7 @@
                   page-size="40"
                   params='{}'
                   sort='{"createdAt":"-1"}'
-                  schemas="parent,*"
+                  schemas="parent,documents,*"
                   enrichers="permissions">
           </mostly-page-provider>
 
@@ -371,7 +371,7 @@
         var memberId = evt.currentTarget.dataset.id;
         op.params = {
           document: memberId,
-          parent: this.selectedCollection.id
+          collect: this.selectedCollection.id
         };
         op.execute().then(() => {
           this._removeFromMembers(evt.target.dataset.id)

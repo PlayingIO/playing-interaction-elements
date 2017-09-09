@@ -23,7 +23,7 @@
       }
     </style>
 
-    <mostly-operation id="removeOp" path="catalogs" op="remove" method="delete"></mostly-operation>
+    <mostly-operation id="removeOp" path="user-collections" op="remove" method="delete"></mostly-operation>
 
     <template id="availability" is="dom-if" if="[[_isAvailable(members, collection)]]">
       <paper-icon-button noink
@@ -57,7 +57,7 @@
           var ids = this.members.map((doc) => doc.id).join(',');
           this.$.removeOp.params = {
             document: ids,
-            parent: this.collection.id
+            collect: this.collection.id
           };
           this.$.removeOp.execute().then(() => {
             this.members = [];

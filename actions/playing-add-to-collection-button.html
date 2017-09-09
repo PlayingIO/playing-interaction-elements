@@ -39,7 +39,7 @@ Example:
       }
     </style>
 
-    <mostly-operation id="addToCollectionOp" path="catalogs" op="create" method="post"></mostly-operation>
+    <mostly-operation id="addToCollectionOp" path="user-collections" op="create" method="post"></mostly-operation>
     <mostly-operation id="createCollectionOp" path="collections" op="create" method="post"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(document)]]">
@@ -140,8 +140,8 @@ Example:
           var title = this.$.nxSelect.textContent.trim();
           op.input = undefined;
           op.params = {
-            'title': title,
-            'description': this.description
+            title: title,
+            description: this.description
           };
           return op.execute().then((response) => {
             this.collection = response.data.id;
@@ -155,8 +155,8 @@ Example:
       _addToCollection: function() {
         var op = this.$$('#addToCollectionOp');
         op.params = {
-          'document': this.document.id,
-          'parent': this.collection
+          document: this.document.id,
+          collect: this.collection
         };
         return op.execute().then(() => {
           this.fire('added-to-collection', {

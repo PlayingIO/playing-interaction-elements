@@ -17,8 +17,7 @@
     </style>
 
     <mostly-page-provider id="provider"
-            provider="catalogs"
-            schemas="parent,document,*"
+            provider="user-collections"
             enrichers="thumbnail, permissions">
     </mostly-page-provider>
 
@@ -55,11 +54,11 @@
       _documentChanged: function () {
         if (this.document && this.hasFacet(this.document, 'Collection')) {
           this.$.results.nxProvider = this.$.provider;
-          this.$.provider.params = { parent: this.document.id };
+          this.$.provider.params = { collect: this.document.id };
           this.$.provider.page = 1;
-          this.$.provider.interceptor = function(docs) {
-            return docs.map(doc => doc.document);
-          };
+          // this.$.provider.interceptor = function(docs) {
+          //   return docs.map(doc => doc.document);
+          // };
           this.fire('collection-loaded', {
             collection: document,
             provider: this.$.provider

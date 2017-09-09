@@ -37,7 +37,7 @@
       }
     </style>
 
-    <mostly-operation id="addToCollectionOp" path="catalogs" op="create" method="post"></mostly-operation>
+    <mostly-operation id="addToCollectionOp" path="user-collections" op="create" method="post"></mostly-operation>
     <mostly-operation id="createCollectionOp" path="collections" op="create" method="post"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(documents.*)]]">
@@ -136,8 +136,8 @@
           var title = this.$.nxSelect.textContent.trim();
           op.input = undefined;
           op.params = {
-            'title': title,
-            'description': this.description
+            title: title,
+            description: this.description
           };
           return op.execute().then((response) => {
             this.collection = response.data.id;
@@ -153,7 +153,7 @@
         var uids = this.documents.map((doc) => doc.id);
         op.params = {
           documents: uids,
-          parent: this.collection
+          collect: this.collection
         };
         return op.execute().then(() => {
           this.fire('added-to-collection', {
