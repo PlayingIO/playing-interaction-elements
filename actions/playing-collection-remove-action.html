@@ -1,7 +1,7 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../paper-tooltip/paper-tooltip.html">
-<link rel="import" href="../../nuxeo-ui-elements/nuxeo-icons.html">
+<link rel="import" href="../../mostly-elements/mostly-icons.html">
 <link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
 <link rel="import" href="../../mostly-elements/behaviors/mostly-i18n-behavior.html">
 
@@ -28,7 +28,7 @@
     <template id="availability" is="dom-if" if="[[_isAvailable(members, collection)]]">
       <paper-icon-button noink
         id="removeButton"
-        icon="nuxeo:remove">
+        icon="mostly:remove">
       </paper-icon-button>
       <paper-tooltip for="removeButton">[[i18n('collections.remove')]]</paper-tooltip>
     </template>

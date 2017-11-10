@@ -1,6 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
-<link rel="import" href="../../nuxeo-ui-elements/nuxeo-icons.html">
+<link rel="import" href="../../mostly-elements/mostly-icons.html">
 <link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
 <link rel="import" href="../../mostly-elements/widgets/mostly-tag.html">
 
@@ -43,7 +43,7 @@
       <mostly-tag>
        <div class="horizontal layout center" >
          <a class="title ellipsis" href$="[[urlFor('browse', item.path)]]">[[item.title]]</a>
-         <iron-icon icon="nuxeo:cross" name="remove" on-tap="remove" data-id$="[[item.id]]"></iron-icon>
+         <iron-icon icon="mostly:cross" name="remove" on-tap="remove" data-id$="[[item.id]]"></iron-icon>
        </div>
      </mostly-tag>
     </template>
