@@ -25,9 +25,9 @@ Example:
         display: inline-block;
       }
 
-      :host([favorite]) ::content iron-icon {
-        stroke: var(--playing-action-color-activated, orange);
-        fill: var(--playing-action-color-activated, orange);
+      :host([favorite]) {
+        --iron-icon-fill-color: var(--icon-toggle-outline-color, var(--mostly-action-color-activated));
+        --iron-icon-stroke-color: var(--icon-toggle-pressed-color, var(--mostly-action-color-activated));
       }
     </style>
 

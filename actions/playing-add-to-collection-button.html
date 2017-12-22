@@ -5,10 +5,11 @@
 <link rel="import" href="../../paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../../paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../../paper-button/paper-button.html">
-<link rel="import" href="../../paper-input/paper-textarea.html">
+
 <link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
 <link rel="import" href="../../mostly-elements/widgets/mostly-dialog.html">
-<link rel="import" href="../../mostly-elements/widgets/mostly-select2.html">
+<link rel="import" href="../../mostly-elements/widgets/mostly-selectivity.html">
+<link rel="import" href="../../mostly-elements/widgets/mostly-textarea.html">
 <link rel="import" href="../../mostly-elements/behaviors/mostly-i18n-behavior.html">
 <link rel="import" href="../../mostly-elements/behaviors/mostly-filters-behavior.html">
 
@@ -28,15 +29,6 @@ Example:
       :host {
         display: inline-block;
       }
-
-      mostly-select2, textarea {
-        width: 100%;
-      }
-
-      .required {
-        color: red;
-        padding: 4px;
-      }
     </style>
 
     <mostly-operation id="addToCollectionOp" path="user-collections" op="create" method="post"></mostly-operation>
@@ -47,11 +39,11 @@ Example:
       <paper-tooltip>[[i18n('addToCollectionButton.tooltip')]]</paper-tooltip>
     </template>
 
-    <mostly-dialog id="dialog" with-backdrop on-iron-overlay-closed="_resetPopup" no-auto-focus>
+    <mostly-dialog id="add-to-collection-dialog" with-backdrop on-iron-overlay-closed="_resetPopup" no-auto-focus>
       <h2>[[i18n('addToCollectionButton.dialog.heading')]]</h2>
       <paper-dialog-scrollable>
-        <label>[[i18n('addToCollectionButton.dialog.collections')]]<span class="required">*</span></label>
-        <mostly-select2 id="nxSelect"
+        <mostly-selectivity id="nxSelect" required
+                label="[[i18n('addToCollectionButton.dialog.collections')]]"
                 path="collections"
                 operation="suggestion"
                 search-field="title"
@@ -60,15 +52,15 @@ Example:
                 value="{{collection}}"
                 tagging="true"
                 query-results-filter="[[resultsFilter]]"
-                result-formatter="[[resultAndSelectionFormatter]]"
-                selection-formatter="[[resultAndSelectionFormatter]]"
+                result-formatter="[[resultFormatter]]"
+                selection-formatter="[[selectionFormatter]]"
                 new-entry-formatter="[[newEntryFormatter]]">
-        </mostly-select2>
-        <paper-textarea label="[[i18n('addToCollectionButton.dialog.description')]]"
+        </mostly-selectivity>
+        <mostly-textarea label="[[i18n('addToCollectionButton.dialog.description')]]"
                 value="{{description::input}}"
                 hidden$="[[!_isNew(collection)]]"
                 always-float-label>
-        </paper-textarea>
+        </mostly-textarea>
       </paper-dialog-scrollable>
       <div class="buttons">
         <paper-button dialog-dismiss>[[i18n('addToCollectionButton.dialog.cancel')]]</paper-button>
@@ -111,10 +103,17 @@ Example:
           }
         },
 
-        resultAndSelectionFormatter: {
+        resultFormatter: {
           type: Function,
           value: function() {
-            return this._resultAndSelectionFormatter.bind(this);
+            return this._resultFormatter.bind(this);
+          }
+        },
+
+        selectionFormatter: {
+          type: Function,
+          value: function() {
+            return this._selectionFormatter.bind(this);
           }
         },
 
@@ -131,14 +130,13 @@ Example:
       },
 
       _toggleDialog: function() {
-        this.$.dialog.toggle();
+        this.$['add-to-collection-dialog'].toggle();
       },
 
       _add: function() {
         if (this._isNew()) {
           var op = this.$$('#createCollectionOp');
-          var title = this.$.nxSelect.textContent.trim();
-          op.input = undefined;
+          var title = this.$.nxSelect.ctedItem.displayLabel;
           op.params = {
             title: title,
             description: this.description
@@ -171,14 +169,22 @@ Example:
         return entry.id.indexOf('-999999') === -1;
       },
 
-      _resultAndSelectionFormatter: function(item) {
+      _resultFormatter: function(item) {
         var label = item.displayLabel || item.title;
+
+        // if we are adding a new entry with the _newEntryFormatter we don't want to escape the HTML
+        return item.id === -1 ? '<iron-icon icon="nuxeo:add" item-icon></iron-icon>' + label : this.$.nxSelect.escapeHTML(label);
+      },
+
+      _selectionFormatter: function(item) {
+        var label = item.displayLabel || item.title;
+
         // if we are adding a new entry with the _newEntryFormatter we don't want to escape the HTML
         return item.id === -1 ? label : this.$.nxSelect.escapeHTML(label);
       },
 
       _newEntryFormatter: function(term) {
-        return {id: -1, displayLabel: '<iron-icon icon="mostly:add" item-icon></iron-icon>' + term};
+        return {id: -1, displayLabel: term};
       },
 
       _isValid: function() {
@@ -186,11 +192,11 @@ Example:
       },
 
       _isNew: function() {
-        return this.collection === '-1';
+        return this.collection === -1;
       },
 
       _resetPopup: function() {
-        this.collection = '';
+        this.set('collection', null);
         this.description = '';
       }
 
