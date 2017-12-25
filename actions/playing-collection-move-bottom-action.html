@@ -1,8 +1,9 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../paper-tooltip/paper-tooltip.html">
-<link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
+
 <link rel="import" href="../../mostly-elements/behaviors/mostly-i18n-behavior.html">
+<link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
 
 <!--
 `playing-collection-move-bottom-action`
@@ -53,6 +54,10 @@
         },
         _selectIdx: {
           type: Number
+        },
+        tooltipPosition: {
+          type: String,
+          value: 'bottom'
         }
       },
 

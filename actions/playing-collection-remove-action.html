@@ -1,9 +1,10 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../paper-tooltip/paper-tooltip.html">
+
 <link rel="import" href="../../mostly-elements/mostly-icons.html">
-<link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
 <link rel="import" href="../../mostly-elements/behaviors/mostly-i18n-behavior.html">
+<link rel="import" href="../../mostly-elements/mostly-common/mostly-operation.html">
 
 <!--
 `playing-collection-remove-action`
@@ -45,6 +46,10 @@
         },
         collection: {
           type: Object
+        },
+        tooltipPosition: {
+          type: String,
+          value: 'bottom'
         }
       },
 
