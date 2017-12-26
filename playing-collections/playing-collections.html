@@ -40,7 +40,7 @@
     }
 
     mostly-data-list {
-      height: calc(100vh - 61px - var(--nuxeo-app-top));
+      height: calc(100vh - 61px - var(--mostly-app-top));
     }
 
     mostly-data-list {
@@ -49,7 +49,7 @@
     }
 
     .collections {
-      height: calc(100vh - 61px - var(--nuxeo-app-top));
+      height: calc(100vh - 61px - var(--mostly-app-top));
       overflow: auto;
     }
 
@@ -69,14 +69,14 @@
     }
 
     .switch:hover {
-      background-color: var(--nuxeo-button-primary);
-      color: var(--nuxeo-button-primary-text);
+      background-color: var(--mostly-button-primary);
+      color: var(--mostly-button-primary-text);
     }
 
     .content {
       @apply --layout-flex;
       @apply --layout-vertical;
-      height: calc(100vh - 61px - var(--nuxeo-app-top));
+      height: calc(100vh - 61px - var(--mostly-app-top));
       width: 293px;
     }
 
@@ -114,25 +114,25 @@
     .list-item {
       cursor: pointer;
       padding: 1em;
-      border-bottom: 1px solid var(--nuxeo-border);
+      border-bottom: 1px solid var(--mostly-border);
     }
 
     .list-item:hover {
-      @apply(--nuxeo-block-hover);
+      @apply(--mostly-block-hover);
     }
 
     .list-item.selected,
     .list-item:focus,
     .list-item.selected:focus {
-      @apply --nuxeo-block-selected;
+      @apply --mostly-block-selected;
     }
 
     .list-item iron-icon {
-      @apply --nuxeo-action;
+      @apply --mostly-action;
     }
 
     .list-item iron-icon:hover {
-      @apply --nuxeo-action-hover;
+      @apply --mostly-action-hover;
     }
 
     .remove {
