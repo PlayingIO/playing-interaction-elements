@@ -6,7 +6,7 @@
 <dom-module id="playing-collection-view-layout">
 
   <template>
-    <style>
+    <style include="mostly-styles">
       :host {
         display: inline-block;
         position: relative;
@@ -27,7 +27,7 @@
             empty-label="[[i18n('collections.noDocument')]]"
             empty-label-when-filtered="[[i18n('collections.noDocumentWhenFiltered')]]"
             hide-content-view-actions>
-      <div class="selectionActions">
+      <div slot="selectionActions">
         <mostly-slot slot="COLLECTION_ACTIONS" model="[[actionContext]]"></mostly-slot>
       </div>
     </playing-default-results>
@@ -60,10 +60,10 @@
           //   return docs.map(doc => doc.document);
           // };
           this.fire('collection-loaded', {
-            collection: document,
+            collection: this.document,
             provider: this.$.provider
           });
-          this.$.provider.fetch();
+          this.$.results._refreshAndFetch();
         }
       },
 
@@ -78,6 +78,7 @@
       _navigate: function(e) {
         this.fire('navigate', {
           doc: e.detail.doc,
+          index: e.detail.index,
           srcDoc: this.document,
           isFromCollection: true
         });
