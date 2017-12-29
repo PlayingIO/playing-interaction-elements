@@ -24,7 +24,7 @@
  -->
 <dom-module id="playing-collections">
   <template>
-    <style include="mostly-styles">
+    <style include="mostly-styles iron-flex">
     :host {
       @apply --layout-vertical;
       @apply --layout-flex;
@@ -192,11 +192,9 @@
                   empty-label-when-filtered="[[i18n('collections.empty')]]">
             <template>
               <div tabindex$="{{tabIndex}}" class$="[[_computedClass(selected)]]">
-                <div class="collection-box vertical layout">
+                <div class="collection-box">
                   <div class="collection-info horizontal layout center">
-                    <div class="vertical layout center">
-                      <iron-icon class="collection-name-icon" icon="mostly:collections"></iron-icon>
-                    </div>
+                    <iron-icon class="collection-name-icon" icon="mostly:collections"></iron-icon>
                     <span class="collection-name title">[[collection.title]]</span>
                   </div>
                   <div class="collection-detail">
@@ -228,7 +226,7 @@
             <template>
               <div tabindex$="{{tabIndex}}" class$="[[_computedClass(selected)]]">
 
-                <div class="list-item-box vertical layout">
+                <div class="list-item-box">
                   <div class="list-item-info horizontal layout center" >
                     <div class="vertical layout center">
                       <playing-document-thumbnail document="[[member]]"></playing-document-thumbnail>
