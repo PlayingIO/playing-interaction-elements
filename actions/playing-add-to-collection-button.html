@@ -173,7 +173,7 @@ Example:
         var label = item.displayLabel || item.title;
 
         // if we are adding a new entry with the _newEntryFormatter we don't want to escape the HTML
-        return item.id === -1 ? '<iron-icon icon="nuxeo:add" item-icon></iron-icon>' + label : this.$.nxSelect.escapeHTML(label);
+        return item.id === -1 ? '<iron-icon icon="mostly:add" item-icon></iron-icon>' + label : this.$.nxSelect.escapeHTML(label);
       },
 
       _selectionFormatter: function(item) {
