@@ -33,31 +33,25 @@
 -->
 
 <!-- DOCUMENT ACTIONS -->
-<mostly-slot-content name="editDocumentAction" slot="DOCUMENT_ACTIONS" order="10">
-  <template>
-    <playing-document-edit-button document="[[document]]"></playing-document-edit-button>
-  </template>
-</mostly-slot-content>
-
-<mostly-slot-content name="addToColDocumentAction" slot="DOCUMENT_ACTIONS" order="10">
+<mostly-slot-content name="addToColDocumentAction" slot="DOCUMENT_ACTIONS" order="20">
   <template>
     <playing-add-to-collection-button document="[[document]]"></playing-add-to-collection-button>
   </template>
 </mostly-slot-content>
 
-<mostly-slot-content name="favoriteToggleDocumentAction" slot="DOCUMENT_ACTIONS" order="20">
+<mostly-slot-content name="favoriteToggleDocumentAction" slot="DOCUMENT_ACTIONS" order="30">
   <template>
     <playing-favorites-toggle-button document="[[document]]"></playing-favorites-toggle-button>
   </template>
 </mostly-slot-content>
 
-<mostly-slot-content name="shareDocumentAction" slot="DOCUMENT_ACTIONS" order="30">
+<mostly-slot-content name="shareDocumentAction" slot="DOCUMENT_ACTIONS" order="40">
   <template>
     <playing-share-button document="[[document]]"></playing-share-button>
   </template>
 </mostly-slot-content>
 
-<mostly-slot-content name="notificationDocumentAction" slot="DOCUMENT_ACTIONS" order="40">
+<mostly-slot-content name="notificationDocumentAction" slot="DOCUMENT_ACTIONS" order="50">
   <template>
     <playing-notifications-toggle-button document="[[document]]"></playing-notifications-toggle-button>
   </template>
