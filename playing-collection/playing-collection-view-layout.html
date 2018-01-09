@@ -18,11 +18,12 @@
 
     <mostly-page-provider id="provider"
             provider="user-collections"
-            enrichers="thumbnail, permissions">
+            enrichers="thumbnail,permissions">
     </mostly-page-provider>
 
     <playing-default-results id="results"
-            items="{{items}}" on-navigate="_navigate"
+            items="{{items}}"
+            on-navigate="_navigate"
             selected-items="{{selectedItems}}"
             empty-label="[[i18n('collections.noDocument')]]"
             empty-label-when-filtered="[[i18n('collections.noDocumentWhenFiltered')]]"
@@ -54,7 +55,10 @@
       _documentChanged: function () {
         if (this.document && this.hasFacet(this.document, 'Collection')) {
           this.$.results.nxProvider = this.$.provider;
-          this.$.provider.params = { collect: this.document.id };
+          this.$.provider.params = {
+            collect: this.document.id,
+            $select: 'creator.*,*'
+          };
           this.$.provider.page = 1;
           // this.$.provider.interceptor = function(docs) {
           //   return docs.map(doc => doc.document);

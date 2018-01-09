@@ -15,7 +15,9 @@
         <span>[[collection.title]]</span>
       </div>
       <div class="content">
-        <playing-default-results id="results" nx-provider="[[nxProvider]]" name$="[[_computeName(collection)]]"
+        <playing-default-results id="results"
+                nx-provider="[[nxProvider]]"
+                name$="[[_computeName(collection)]]"
                 selected-items="{{selectedItems}}" items="{{items}}"
                 empty-label="[[i18n('collections.noDocument')]]"
                 empty-label-when-filtered="[[i18n('collections.noDocumentWhenFiltered')]]">
