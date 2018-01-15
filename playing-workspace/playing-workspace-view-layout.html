@@ -1,0 +1,27 @@
+<!--
+`playing-workspace-view-layout`
+@group Playing UI
+@element playing-workspace-view-layout
+-->
+<dom-module id="playing-workspace-view-layout">
+
+  <template>
+    <playing-document-content document="[[document]]"></playing-document-content>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'playing-workspace-view-layout',
+      behaviors: [Mostly.LayoutBehavior],
+      properties: {
+        /**
+         * @doctype Workspace
+         */
+        document: {
+          type: Object
+        }
+      }
+    });
+  </script>
+
+</dom-module>

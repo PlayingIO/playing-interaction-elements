@@ -1,0 +1,60 @@
+<dom-module id="playing-workspace-create-layout">
+
+  <template>
+    <style>
+      *[role=widget] {
+        margin-bottom: 8px;
+      }
+    </style>
+
+    <mostly-input role="widget"
+        label="[[i18n('title')]]"
+        name="title"
+        value="{{document.title}}"
+        autofocus required>
+    </mostly-input>
+
+    <mostly-textarea role="widget"
+        label="[[i18n('label.description')]]"
+        name="description"
+        value="{{document.description}}">
+    </mostly-textarea>
+
+    <playing-vocabulary-suggestion role="widget" label="[[i18n('label.dublincore.nature')]]"
+            name="nature"
+            directory-name="nature"
+            value="{{document.nature}}"
+            placeholder="[[i18n('dublincoreEdit.directorySuggestion.placeholder')]]"
+            min-chars="0">
+    </playing-vocabulary-suggestion>
+
+    <playing-vocabulary-suggestion role="widget" label="[[i18n('label.dublincore.subjects')]]"
+            directory-name="l10nsubjects"
+            name="subjects"
+            value="{{document.subjects}}"
+            multiple="true"
+            dbl10n="true"
+            placeholder="[[i18n('dublincoreEdit.directorySuggestion.placeholder')]]"
+            min-chars="0">
+    </playing-vocabulary-suggestion>
+
+    <mostly-date-picker role="widget" label="[[i18n('label.dublincore.expiredAt')]]"
+            name="expiredAt"
+            value="{{document.expiredAt}}">
+    </mostly-date-picker>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'playing-workspace-create-layout',
+      behaviors: [Mostly.LayoutBehavior],
+      properties: {
+        /**
+         * @doctype Workspace
+         */
+        document: Object
+      }
+    });
+  </script>
+
+</dom-module>

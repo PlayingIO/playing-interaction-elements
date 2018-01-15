@@ -1,9 +1,9 @@
 <!--
-`playing-collection-metadata-layout`
+`playing-workspace-metadata-layout`
 @group Playing UI
-@element playing-collection-metadata-layout
+@element playing-workspace-metadata-layout
 -->
-<dom-module id="playing-collection-metadata-layout">
+<dom-module id="playing-workspace-metadata-layout">
 
   <template>
     <style>
@@ -12,7 +12,7 @@
       }
 
       label {
-        @apply --mostly-label;
+        @apply --nuxeo-label;
       }
 
       div.multiline {
@@ -48,7 +48,7 @@
 
     <playing-vocabulary-suggestion role="widget"
             label="[[i18n('label.dublincore.subjects')]]"
-            vocabulary-name="subject"
+            vocabulary-name="l10nsubjects"
             name="subjects"
             value="{{document.subjects}}"
             hidden$="[[!document.subjects.length]]"
@@ -65,11 +65,11 @@
 
   <script>
     Polymer({
-      is: 'playing-collection-metadata-layout',
+      is: 'playing-workspace-metadata-layout',
       behaviors: [Mostly.LayoutBehavior],
       properties: {
         /**
-         * @doctype Collection
+         * @doctype Workspace
          */
         document: Object
       }
