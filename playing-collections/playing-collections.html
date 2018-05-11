@@ -383,7 +383,7 @@
         var op = this.$.removeFromCollectionOp;
         var memberId = evt.currentTarget.dataset.id;
         op.params = {
-          document: memberId,
+          subject: memberId,
           collect: this.selectedCollection.id
         };
         op.execute().then(() => {

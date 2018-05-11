@@ -68,7 +68,7 @@
       remove: function(evt) {
         var op = this.$.removeOp;
         op.params = {
-          document: this.document.id,
+          subject: this.document.id,
           collect: evt.currentTarget.dataset.id
         };
         op.execute().then(() => {

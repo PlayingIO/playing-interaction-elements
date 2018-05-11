@@ -61,8 +61,9 @@
             $select: 'creator.*,*'
           };
           this.$.provider.page = 1;
+          // let server do the flat merge
           // this.$.provider.interceptor = function(docs) {
-          //   return docs.map(doc => doc.document);
+          //   return docs.map(doc => doc.subject);
           // };
           this.fire('collection-loaded', {
             collection: this.document,

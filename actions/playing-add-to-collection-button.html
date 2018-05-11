@@ -153,7 +153,7 @@ Example:
       _addToCollection: function() {
         var op = this.$$('#addToCollectionOp');
         op.params = {
-          document: this.document.id,
+          subject: this.document.id,
           collect: this.collection
         };
         return op.execute().then(() => {

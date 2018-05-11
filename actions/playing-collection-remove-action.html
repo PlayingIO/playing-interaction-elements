@@ -61,7 +61,7 @@
         if (this.members && this.members.length > 0) {
           var ids = this.members.map((doc) => doc.id).join(',');
           this.$.removeOp.params = {
-            document: ids,
+            subject: ids,
             collect: this.collection.id
           };
           this.$.removeOp.execute().then(() => {
