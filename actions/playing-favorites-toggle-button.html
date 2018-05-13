@@ -31,8 +31,8 @@ Example:
       }
     </style>
 
-    <mostly-operation id="opAdd" path="favorites" op="addToFavorites" input="me"></mostly-operation>
-    <mostly-operation id="opRemove" path="favorites" op="removeFromFavorites" input="me"></mostly-operation>
+    <mostly-operation id="opAdd" path="user-favorites" op="create" method="post"></mostly-operation>
+    <mostly-operation id="opRemove" path="user-favorites" op="remove" method="delete"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(document)]]">
       <paper-icon-button icon="[[icon]]" noink></paper-icon-button>
