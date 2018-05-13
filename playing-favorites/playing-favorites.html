@@ -231,7 +231,7 @@
         e.stopImmediatePropagation();
         var docUid = e.model.favorite.id;
         this.$.removeFromFavOp.params = {
-          document: docUid
+          subject: docUid
         };
         this.$.removeFromFavOp.execute().then(() => {
           this.fire('removed-from-favorites', {docUid: docUid});
