@@ -178,7 +178,7 @@
                   page-size="40"
                   params='{}'
                   sort='{"createdAt":"-1"}'
-                  schemas="creator,documents,*"
+                  schemas="creator,*"
                   enrichers="permissions">
           </mostly-page-provider>
 
@@ -219,7 +219,9 @@
         <div id="queue" hidden$="{{!_isDisplayMembers}}">
           <mostly-data-list id="membersList"
                   selected-item="{{selectedMember}}"
-                  selection-enabled as="member"
+                  selection-enabled
+                  select-on-tap
+                  as="member"
                   empty-label="[[i18n('collections.members.empty')]]"
                   empty-label-when-filtered="[[i18n('collections.members.empty')]]">
             <template>
@@ -258,10 +260,10 @@
   <script>
     Polymer({
       is: 'playing-collections',
+
       behaviors: [Mostly.RoutingBehavior, Mostly.I18nBehavior, Mostly.FiltersBehavior],
 
       properties: {
-
         selectedSearch: {
           type: String,
           value: 'faceted'
@@ -360,7 +362,7 @@
           this._exitAnimation = 'slide-right-animation';
           this._selectedPage = 0;
           if (this.selectedCollection) {
-            this.fire('navigate', {doc: this.selectedCollection});
+            this.fire('navigate', { doc: this.selectedCollection });
           }
         }
       },
@@ -432,7 +434,7 @@
 
       _selectedCollectionChanged: function(collection) {
         if (collection) {
-          this.fire('navigate', {doc: collection});
+          this.fire('navigate', { doc: collection });
         }
       },
 
