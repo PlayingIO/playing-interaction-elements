@@ -25,13 +25,11 @@
 
     <mostly-operation path="collections" op="move" id="moveDownOp"></mostly-operation>
 
-    <template id="availability" is="dom-if" if="[[_isAvailable(members)]]">
       <paper-icon-button noink
         id="downButton"
         icon="icons:arrow-downward">
       </paper-icon-button>
       <paper-tooltip for="downButton">[[i18n('collections.moveDown')]]</paper-tooltip>
-    </template>
 
   </template>
 

@@ -58,7 +58,7 @@
           this.$.results.nxProvider = this.$.provider;
           this.$.provider.params = {
             collect: this.document.id,
-            $select: 'creator.*,*'
+            $select: 'creator,*'
           };
           this.$.provider.page = 1;
           // let server do the flat merge
