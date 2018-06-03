@@ -1,7 +1,7 @@
 Playing Interactions Web Components
 ===================================
 
-User interactions management web components for playful applications.
+User interactions management web components for building playful applications.
 
 # Usage
 

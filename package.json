@@ -1,6 +1,6 @@
 {
   "name": "playing-interaction-elements",
-  "description": "User interactions management web components for playful applications",
+  "description": "User interactions management web components for building playful applications",
   "version": "1.0.5",
   "license": "MIT",
   "devDependencies": {
