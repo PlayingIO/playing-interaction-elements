@@ -30,6 +30,14 @@ Example:
       :host {
         display: inline-block;
       }
+
+      /* Fix known stacking issue in iOS (NXP-24600)
+         https://github.com/PolymerElements/paper-dialog-scrollable/issues/72 */
+      paper-dialog-scrollable {
+        --paper-dialog-scrollable: {
+          -webkit-overflow-scrolling: auto;
+        };
+      }
     </style>
 
     <mostly-operation id="addToCollectionOp" path="user-collections" op="create" method="post"></mostly-operation>
