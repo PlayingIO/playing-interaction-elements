@@ -35,8 +35,8 @@
     <mostly-operation id="createCollectionOp" path="collections" op="create" method="post"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(documents.*)]]">
-      <paper-icon-button noink icon="mostly:collections" id="addColBut" on-tap="_toggleDialog"></paper-icon-button>
-      <paper-tooltip for="addColBut">[[i18n('addToCollectionButton.tooltip')]]</paper-tooltip>
+      <paper-icon-button id="addColBut" noink icon="mostly:collections" on-tap="_toggleDialog"></paper-icon-button>
+      <paper-tooltip for="addColBut" position="[[tooltipPosition]]">[[i18n('addToCollectionButton.tooltip')]]</paper-tooltip>
     </template>
 
     <mostly-dialog id="dialog" on-iron-overlay-closed="_resetPopup" no-auto-focus with-backdrop reparent>
