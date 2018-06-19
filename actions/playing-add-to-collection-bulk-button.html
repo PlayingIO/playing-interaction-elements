@@ -158,14 +158,14 @@
 
       _addToCollection: function() {
         var op = this.$$('#addToCollectionOp');
-        var uids = this.documents.map((doc) => doc.id);
+        var docIds = this.documents.map((doc) => doc.id);
         op.params = {
-          subjects: uids,
+          subjects: docIds,
           collect: this.collection
         };
         return op.execute().then(() => {
           this.fire('added-to-collection', {
-            docIds: uids,
+            docIds: docIds,
             collectionId: this.collection
           });
           this._resetPopup();
