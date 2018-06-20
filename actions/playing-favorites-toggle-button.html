@@ -81,11 +81,11 @@ Example:
       },
 
       ready: function() {
-        window.addEventListener('removed-from-favorites', function(e) {
+        window.addEventListener('removed-from-favorites', e => {
           if (this.document && e.detail.docUid && e.detail.docUid === this.document.id) {
             this.favorite = false;
           }
-        }.bind(this));
+        });
       },
 
       _isAvailable: function(doc) {

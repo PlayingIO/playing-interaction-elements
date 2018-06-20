@@ -127,9 +127,9 @@
 
       _isAvailable: function() {
         if (this.documents && this.documents.length > 0) {
-          return this.documents.every(function(doc) {
+          return this.documents.every(doc => {
             return !this.hasFacet(doc, 'NotCollectionMember');
-          }.bind(this));
+          });
         }
         return false;
       },
@@ -147,7 +147,7 @@
             title: title,
             description: this.description
           };
-          return op.execute().then((response) => {
+          return op.execute().then(response => {
             this.collection = response.data.id;
             this._addToCollection();
           });

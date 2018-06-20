@@ -399,7 +399,7 @@
       },
 
       _removeFromMembers: function(id) {
-        var memberIndex = memberIndex = this.$.membersList.items.findIndex(function(el) {
+        var memberIndex = memberIndex = this.$.membersList.items.findIndex(el => {
           return el.id === id;
         });
         if (memberIndex > -1) {
@@ -448,7 +448,7 @@
             this._refreshCollections();
           }
         });
-        window.addEventListener('removed-from-collection', (e) => {
+        window.addEventListener('removed-from-collection', e => {
           if (this.visible) {
             if (e.detail.innerRemove) {
               return;
