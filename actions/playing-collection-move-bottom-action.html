@@ -38,23 +38,30 @@
   <script>
     Polymer({
       is: 'playing-collection-move-bottom-action',
+
       behaviors: [Mostly.I18nBehavior],
+
       properties: {
         members: {
           type: Object
         },
+
         allMembers: {
           type: Object
         },
+
         collection: {
           type: Object
         },
+
         _targetIdx: {
           type: Number
         },
+
         _selectIdx: {
           type: Number
         },
+
         tooltipPosition: {
           type: String,
           value: 'bottom'
@@ -83,7 +90,7 @@
                 this.$.moveBottomOp.execute().then(() => {
                   this.allMembers[this._selectIdx] = this.allMembers.splice(this._targetIdx, 1,
                     this.allMembers[this._selectIdx])[0];
-                  this.fire('refresh-display', {focusIndex: this._targetIdx});
+                  this.fire('refresh-display', { focusIndex: this._targetIdx });
                 });
               }
               break;

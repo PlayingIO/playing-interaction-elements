@@ -39,14 +39,18 @@
   <script>
     Polymer({
       is: 'playing-collection-remove-action',
+
       behaviors: [Mostly.I18nBehavior],
+
       properties: {
         members: {
           type: Object
         },
+
         collection: {
           type: Object
         },
+
         tooltipPosition: {
           type: String,
           value: 'bottom'
