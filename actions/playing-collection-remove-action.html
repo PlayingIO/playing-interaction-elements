@@ -27,10 +27,7 @@
     <mostly-operation id="removeOp" path="user-collections" op="remove" method="delete"></mostly-operation>
 
     <template id="availability" is="dom-if" if="[[_isAvailable(members, collection)]]">
-      <paper-icon-button noink
-        id="removeButton"
-        icon="mostly:remove">
-      </paper-icon-button>
+      <paper-icon-button noink id="removeButton" icon="mostly:remove"></paper-icon-button>
       <paper-tooltip for="removeButton">[[i18n('collections.remove')]]</paper-tooltip>
     </template>
 

@@ -26,10 +26,7 @@
     <mostly-operation id="moveTopOp" path="user-collections" op="move"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(members)]]">
-      <paper-icon-button noink
-        id="topButton"
-        icon="editor:vertical-align-top">
-      </paper-icon-button>
+      <paper-icon-button noink id="topButton" icon="editor:vertical-align-top"></paper-icon-button>
       <paper-tooltip for="topButton">[[i18n('collections.moveTop')]]</paper-tooltip>
     </template>
 

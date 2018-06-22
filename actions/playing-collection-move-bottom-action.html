@@ -26,10 +26,7 @@
     <mostly-operation id="moveBottomOp" path="user-collections" op="move"></mostly-operation>
 
     <template is="dom-if" if="[[_isAvailable(members)]]">
-      <paper-icon-button noink
-        id="bottomButton"
-        icon="editor:vertical-align-bottom">
-      </paper-icon-button>
+      <paper-icon-button noink id="bottomButton" icon="editor:vertical-align-bottom"></paper-icon-button>
       <paper-tooltip for="bottomButton">[[i18n('collections.moveBottom')]]</paper-tooltip>
     </template>
 
@@ -75,8 +72,7 @@
       moveBottom: function() {
         if (this.members && this.members.length === 1 && this.allMembers) {
           var select = this.members[0].id;
-          var i = 0;
-          for (; i < this.allMembers.length; i++) {
+          for (var i = 0; i < this.allMembers.length; i++) {
             if (this.allMembers[i].id === select) {
               if (i < this.allMembers.length - 1) {
                 this._selectIdx = i;

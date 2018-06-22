@@ -25,11 +25,10 @@
 
     <mostly-operation id="moveDownOp" path="user-collections" op="move"></mostly-operation>
 
-      <paper-icon-button noink
-        id="downButton"
-        icon="icons:arrow-downward">
-      </paper-icon-button>
+    <template is="dom-if" if="[[_isAvailable(members)]]">
+      <paper-icon-button noink id="downButton" icon="icons:arrow-downward"></paper-icon-button>
       <paper-tooltip for="downButton">[[i18n('collections.moveDown')]]</paper-tooltip>
+    </template>
 
   </template>
 
@@ -73,8 +72,7 @@
       moveDown: function() {
         if (this.members && this.members.length === 1 && this.allMembers) {
           var select = this.members[0].id;
-          var i = 0;
-          for (; i < this.allMembers.length; i++) {
+          for (var i = 0; i < this.allMembers.length; i++) {
             if (this.allMembers[i].id === select) {
               if (i < this.allMembers.length - 1) {
                 this._selectIdx = i;
