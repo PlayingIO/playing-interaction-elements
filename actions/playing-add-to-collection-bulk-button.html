@@ -183,7 +183,7 @@
         var label = item.displayLabel || item.title;
         // if we are adding a new entry with the _newEntryFormatter
         // we don't want to escape the HTML
-        return item.id === -1 ? label : this.$.nxSelect.escapeHTML(label);
+        return item.id === -1? label : this.$.nxSelect.escapeHTML(label);
       },
 
       _newEntryFormatter: function(term) {
